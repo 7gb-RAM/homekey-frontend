@@ -16,7 +16,7 @@ const Sidebar = () => {
     <>
       <div className="w-64 bg-white dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">HomeFlow AI</h1>
+          <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
           <select className="w-full p-2 border rounded-lg mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600">
             <option>Select Property</option>
           </select>
