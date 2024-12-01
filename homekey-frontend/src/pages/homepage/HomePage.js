@@ -1,22 +1,29 @@
-import React from 'react';
-import { SignedIn, SignedOut } from '@clerk/clerk-react';
+// src/pages/HomePage/HomePage.js
+import React, { useEffect } from 'react';
+import { useAuth } from '@clerk/clerk-react';
+import { Link, useNavigate } from 'react-router-dom';
 
-const HomePage = () => (
-  <div>
-    <h1>Welcome to the App</h1>
-    <SignedIn>
-      {/* If the user is signed in, show a link to the internal page */}
-      <p>
-        You are signed in. Go to the <a href="/internal">Internal Page</a>.
-      </p>
-    </SignedIn>
-    <SignedOut>
-      {/* If the user is signed out, prompt to sign in or sign up */}
-      <p>
-        Please <a href="/sign-in">Sign In</a> or <a href="/sign-up">Sign Up</a> to continue.
-      </p>
-    </SignedOut>
-  </div>
-);
+const HomePage = () => {
+  const { isSignedIn } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate('/dashboard');
+    }
+  }, [isSignedIn, navigate]);
+
+  return (
+    <div>
+      <h1>Welcome to the App</h1>
+      {!isSignedIn && (
+        <p>
+          Please <Link to="/sign-in">Sign In</Link> or{' '}
+          <Link to="/sign-up">Sign Up</Link> to continue.
+        </p>
+      )}
+    </div>
+  );
+};
 
 export default HomePage;
