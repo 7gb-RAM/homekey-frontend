@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SignIn, SignUp } from '@clerk/clerk-react';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/homepage/HomePage';
 import InternalPage from './pages/InternalPage';
 
 function App() {
