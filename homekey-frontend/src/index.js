@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ClerkProvider } from '@clerk/clerk-react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+// const clerkPubKey = "pk_test_ZnVubnktZ2liYm9uLTQ1LmNsZXJrLmFjY291bnRzLmRldiQ";
+const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY
+console.log("process: ", process.env.REACT_APP_CLERK_PUBLISHABLE_KEY)
+
 root.render(
   <React.StrictMode>
-    <App />
+    <ClerkProvider publishableKey={clerkPubKey}>
+      <App />
+    </ClerkProvider>
   </React.StrictMode>
 );
 
