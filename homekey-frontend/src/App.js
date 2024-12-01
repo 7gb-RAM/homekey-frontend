@@ -1,10 +1,19 @@
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/home';
+import SellerWorkflow from './pages/seller_workflow';
+import Layout from './layout';
 
 const App = () => {
   return (
-  <h1 className="text-3xl font-bold underline">
-    App home key
-  </h1>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/seller_workflow" element={<SellerWorkflow />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
   )
 }
 
