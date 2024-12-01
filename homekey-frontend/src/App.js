@@ -11,12 +11,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<HomePage />} />
+        {/* Authentication Routes */}
         <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
         <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-        <Route path="/seller_workflow" element={<SellerWorkflow />} />
-        <Route path="/buyer_workflow" element={<BuyerWorkflow />} />
-        <Route path="/internal" element={<InternalPage />} />
+
+        {/* Main Layout */}
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/seller_workflow" element={<SellerWorkflow />} />
+          <Route path="/buyer_workflow" element={<BuyerWorkflow />} />
+          <Route path="/internal" element={<InternalPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

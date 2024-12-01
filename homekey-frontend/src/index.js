@@ -11,9 +11,9 @@ console.log("process: ", process.env.REACT_APP_CLERK_PUBLISHABLE_KEY)
 
 root.render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={clerkPubKey}>
+    {/* <ClerkProvider publishableKey={clerkPubKey}> */}
       <App />
-    </ClerkProvider>
+    {/* </ClerkProvider> */}
   </React.StrictMode>
 );
 reportWebVitals();
