@@ -1,6 +1,6 @@
-import { Header } from "./header";
-import MobileDailog from "./mobile_drawer";
-import { StepItem } from "./step_item";
+import { Header } from "../components/header";
+import MobileDailog from "../components/mobile_drawer";
+import { StepItem } from "../components/step_item";
 
 export function Steps({title, steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep, children }) {
 
