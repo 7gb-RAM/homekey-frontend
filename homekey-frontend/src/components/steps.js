@@ -2,7 +2,7 @@ import { Header } from "./header";
 import MobileDailog from "./mobile_drawer";
 import { StepItem } from "./step_item";
 
-export function Steps({steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep, children }) {
+export function Steps({title, steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep, children }) {
 
   const getStepsForm = ({ isMobile }) => {
     return (
@@ -21,7 +21,7 @@ export function Steps({steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosu
         </MobileDailog>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Header title={"Seller Workflow"} onClickMenu={() => setMobileFiltersOpen(true)} />
+          <Header title={title} onClickMenu={() => setMobileFiltersOpen(true)} />
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">

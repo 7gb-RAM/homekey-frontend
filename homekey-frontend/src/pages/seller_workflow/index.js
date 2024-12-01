@@ -133,6 +133,7 @@ export default function SellerWorkflow({ initialStep = 1 }) {
 
   return (
     <Steps
+      title={"Seller Workflow"}
       steps={steps}
       mobileFiltersOpen={mobileFiltersOpen}
       setMobileFiltersOpen={setMobileFiltersOpen}
@@ -140,7 +141,7 @@ export default function SellerWorkflow({ initialStep = 1 }) {
       currentStep={currentStep}
     >
       {/* children will come here */}
-      Hello
+      Hello Seller
     </Steps>
   );
 }
