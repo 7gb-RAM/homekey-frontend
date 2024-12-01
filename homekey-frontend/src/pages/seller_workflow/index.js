@@ -122,7 +122,7 @@ const initialStepsState = [
   },
 ];
 
-export default function SellerWorkflow({ initialStep = 1, children }) {
+export default function SellerWorkflow({ initialStep = 1 }) {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [steps, setSteps] = useState(initialStepsState);
@@ -140,6 +140,7 @@ export default function SellerWorkflow({ initialStep = 1, children }) {
       currentStep={currentStep}
     >
       {/* children will come here */}
+      Hello
     </Steps>
   );
 }

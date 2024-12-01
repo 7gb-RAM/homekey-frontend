@@ -2,7 +2,7 @@ import { Header } from "./header";
 import MobileDailog from "./mobile_drawer";
 import { StepItem } from "./step_item";
 
-export function Steps({steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep }) {
+export function Steps({steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep, children }) {
 
   const getStepsForm = ({ isMobile }) => {
     return (
@@ -28,7 +28,9 @@ export function Steps({steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosu
               {getStepsForm({ isMobile: false })}
 
               {/* Main content */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3">
+                {children}
+              </div>
             </div>
           </section>
         </main>
