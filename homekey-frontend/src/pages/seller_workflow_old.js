@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -12,67 +12,101 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-} from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
+} from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon, MinusIcon, PlusIcon } from "@heroicons/react/20/solid";
 
-const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
-]
-const filters = [
+// 1. Initial Setup and Listing Preparation
+// 2. Pre-Escrow Actions and Buyer Interaction
+// 3. Escrow Process and Inspections
+// 4. Final Disclosure and Contract Closing
+// 5. Post-Closing and Transfer
+const initialStepsState = [
   {
-    id: 'color',
-    name: 'Color',
+    id: 1,
+    name: "Initial Setup and Listing Preparation",
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+      { value: "1-1", label: "Notify FSH of intent to sell", checked: false },
+      { value: "1-2", label: "Prepare your home for listing (photo-ready)", checked: false },
+      { value: "1-3", label: "Provide FSH with a photo for the website", checked: false },
+      { value: "1-4", label: "Enter sale listing in FSH website", checked: false },
+      { value: "1-5", label: "Approve sale listing on FSH", checked: false },
     ],
   },
   {
-    id: 'category',
-    name: 'Category',
+   
+    id: 2,
+    name: "Pre-Escrow Actions and Buyer Interaction",
     options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
+      { value: "new-arrivals", label: "New Arrivals", checked: false },
+      { value: "sale", label: "Sale", checked: false },
+      { value: "travel", label: "Travel", checked: true },
+      { value: "organization", label: "Organization", checked: false },
+      { value: "accessories", label: "Accessories", checked: false },
     ],
   },
   {
-    id: 'size',
-    name: 'Size',
+    id: 3,
+    name: "Escrow Process and Inspections",
     options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
+      { value: "2l", label: "2L", checked: false },
+      { value: "6l", label: "6L", checked: false },
+      { value: "12l", label: "12L", checked: false },
+      { value: "18l", label: "18L", checked: false },
+      { value: "20l", label: "20L", checked: false },
+      { value: "40l", label: "40L", checked: true },
     ],
   },
-]
+  {
+     
+    id: 4,
+    name: "Final Disclosure and Contract Closing",
+    options: [
+      { value: "2l", label: "2L", checked: false },
+      { value: "6l", label: "6L", checked: false },
+      { value: "12l", label: "12L", checked: false },
+      { value: "18l", label: "18L", checked: false },
+      { value: "20l", label: "20L", checked: false },
+      { value: "40l", label: "40L", checked: true },
+    ],
+  },
+  {
+     
+    id: 5,
+    name: "Post-Closing and Transfer",
+    options: [
+      { value: "2l", label: "2L", checked: false },
+      { value: "6l", label: "6L", checked: false },
+      { value: "12l", label: "12L", checked: false },
+      { value: "18l", label: "18L", checked: false },
+      { value: "20l", label: "20L", checked: false },
+      { value: "40l", label: "40L", checked: true },
+    ],
+  },
+];
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(" ");
 }
 
-export default function SellerWorkflow() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+export default function SellerWorkflow({ initialStep = 1 }) {
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState(initialStep);
+  const [steps, setSteps] = useState(initialStepsState);
+  
+  const isDisclosureEnabled = (disclosureStepId)=>{
+    return disclosureStepId >= currentStep;
+  }
 
   return (
     <div className="bg-white">
       <div>
         {/* Mobile filter dialog */}
-        <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
+        <Dialog
+          open={mobileFiltersOpen}
+          onClose={setMobileFiltersOpen}
+          className="relative z-40 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 bg-black/25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
@@ -95,27 +129,29 @@ export default function SellerWorkflow() {
                 </button>
               </div>
 
-              {/* Filters */}
+              {/* Filters FOR MOBILE */}
               <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
-                  <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
+                {steps.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className={`border-t border-gray-200 px-4 py-6 ${isDisclosureEnabled(section.id) && "pointer-events-none"}`}
+                    defaultOpen={currentStep === section.id}
+                  >
                     <h3 className="-mx-2 -my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">{section.name}</span>
+                        <span className="font-medium text-left text-gray-900">
+                          {section.name}
+                        </span>
                         <span className="ml-6 flex items-center">
-                          <PlusIcon aria-hidden="true" className="size-5 group-data-[open]:hidden" />
-                          <MinusIcon aria-hidden="true" className="size-5 [.group:not([data-open])_&]:hidden" />
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="size-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="size-5 [.group:not([data-open])_&]:hidden"
+                          />
                         </span>
                       </DisclosureButton>
                     </h3>
@@ -173,7 +209,9 @@ export default function SellerWorkflow() {
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">New Arrivals</h1>
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              New Arrivals
+            </h1>
 
             <div className="flex items-center">
               <button
@@ -188,21 +226,30 @@ export default function SellerWorkflow() {
           </div>
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
-            <h2 id="products-heading" className="sr-only">
-              Products
-            </h2>
-
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                {filters.map((section) => (
-                  <Disclosure key={section.id} as="div" className="border-b border-gray-200 py-6">
+                {steps.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className={`border-b border-gray-200 pointer py-6 ${isDisclosureEnabled(section.id) && "pointer-events-none"}`}
+                    defaultOpen={currentStep === section.id}
+                  >
                     <h3 className="-my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">{section.name}</span>
+                        <span className="font-medium text-left text-gray-900">
+                          {section.name}
+                        </span>
                         <span className="ml-6 flex items-center">
-                          <PlusIcon aria-hidden="true" className="size-5 group-data-[open]:hidden" />
-                          <MinusIcon aria-hidden="true" className="size-5 [.group:not([data-open])_&]:hidden" />
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="size-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="size-5 [.group:not([data-open])_&]:hidden"
+                          />
                         </span>
                       </DisclosureButton>
                     </h3>
@@ -242,7 +289,10 @@ export default function SellerWorkflow() {
                                 </svg>
                               </div>
                             </div>
-                            <label htmlFor={`filter-${section.id}-${optionIdx}`} className="text-sm text-gray-600">
+                            <label
+                              htmlFor={`filter-${section.id}-${optionIdx}`}
+                              className="text-sm text-gray-600"
+                            >
                               {option.label}
                             </label>
                           </div>
@@ -260,5 +310,5 @@ export default function SellerWorkflow() {
         </main>
       </div>
     </div>
-  )
+  );
 }
