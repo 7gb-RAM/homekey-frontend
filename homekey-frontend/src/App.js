@@ -6,6 +6,7 @@ import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
+import BuyerWorkflow from './pages/buyer_workflow';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -44,6 +45,8 @@ function App() {
         {/* Authentication Routes */}
         <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
         <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+
+        <Route path="/test_buyer/*" element={<BuyerWorkflow routing="path" path="/test_buyer" />} />
 
           {/* Protected routes */}
           <Route
