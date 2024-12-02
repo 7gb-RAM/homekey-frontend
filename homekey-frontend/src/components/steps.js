@@ -1,14 +1,29 @@
 import { Header } from "../components/header";
-import MobileDailog from "../components/mobile_drawer";
+import MobileDialog from "../components/mobile_drawer";
 import { StepItem } from "../components/step_item";
 
-export function Steps({title, steps, mobileFiltersOpen, setMobileFiltersOpen,isDisclosureDisabled, currentStep, children }) {
-
+export function Steps({
+  title,
+  steps,
+  mobileFiltersOpen,
+  setMobileFiltersOpen,
+  isDisclosureDisabled,
+  currentStep,
+  updateOptionCheckedStatus, // Accept the function as a prop
+  children,
+}) {
   const getStepsForm = ({ isMobile }) => {
     return (
       <form className={isMobile ? "mt-4 border-t border-gray-200" : "hidden lg:block"}>
         {steps.map((step) => (
-          <StepItem step={step} isDisabled={isDisclosureDisabled} isOpen={currentStep === step.id} stepClass={isMobile && "px-6"}/>
+          <StepItem
+            key={step.id} // Added key prop
+            step={step}
+            isDisabled={isDisclosureDisabled}
+            isOpen={currentStep === step.id}
+            stepClass={isMobile && "px-6"}
+            updateOptionCheckedStatus={updateOptionCheckedStatus} // Pass it to StepItem
+          />
         ))}
       </form>
     );
@@ -16,9 +31,9 @@ export function Steps({title, steps, mobileFiltersOpen, setMobileFiltersOpen,isD
   return (
     <div className="bg-white">
       <div>
-        <MobileDailog title={"Steps"} isOpen={mobileFiltersOpen} onClose={setMobileFiltersOpen}>
+        <MobileDialog title={"Steps"} isOpen={mobileFiltersOpen} onClose={setMobileFiltersOpen}>
           {getStepsForm({ isMobile: true })}
-        </MobileDailog>
+        </MobileDialog>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Header title={title} onClickMenu={() => setMobileFiltersOpen(true)} />
@@ -28,9 +43,7 @@ export function Steps({title, steps, mobileFiltersOpen, setMobileFiltersOpen,isD
               {getStepsForm({ isMobile: false })}
 
               {/* Main content */}
-              <div className="lg:col-span-3">
-                {children}
-              </div>
+              <div className="lg:col-span-3">{children}</div>
             </div>
           </section>
         </main>

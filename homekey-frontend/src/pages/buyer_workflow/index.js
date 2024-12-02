@@ -91,6 +91,7 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
   const isDisclosureDisabled = (disclosureStepId) => {
     return disclosureStepId >= currentStep;
   };
+
   const isNextDisabled = () => {
     return false;
   };
@@ -98,7 +99,29 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
   const isPrevDisabled = () => {
     return currentOption === 0;
   };
+
   const step = steps.find((step) => step.id === currentStep);
+
+  // Function to update the checked status of an option
+  const updateOptionCheckedStatus = (stepId, optionIndex, checked) => {
+    setSteps((prevSteps) =>
+      prevSteps.map((s) => {
+        if (s.id === stepId) {
+          return {
+            ...s,
+            options: s.options.map((o, index) => {
+              if (index === optionIndex) {
+                return { ...o, checked };
+              }
+              return o;
+            }),
+          };
+        }
+        return s;
+      })
+    );
+  };
+
   return (
     <Steps
       title={"Buyer Workflow"}
@@ -107,24 +130,32 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
       setMobileFiltersOpen={setMobileFiltersOpen}
       isDisclosureDisabled={isDisclosureDisabled}
       currentStep={currentStep}
+      updateOptionCheckedStatus={updateOptionCheckedStatus} // Pass the function to Steps
     >
       <div className="mt-4">
         <StepsHeader
           title={step.options[currentOption].label}
-          progress={(currentOption / step.options.length) * 100}
+          progress={((currentOption + 1) / step.options.length) * 100}
           nextTitle={currentOption < step.options.length - 1 ? "Next" : "Save"}
           onClickNext={() => {
+            // Mark the current option as checked
+            updateOptionCheckedStatus(currentStep, currentOption, true);
+
             if (currentOption < step.options.length - 1) {
+              // Move to the next option
               setCurrentOption(currentOption + 1);
             } else {
-              alert("submit");
+              alert("All steps in this section are completed.");
             }
           }}
           onClickPrev={() => {
             if (currentOption > 0) {
+              // Uncheck the previous option
+              updateOptionCheckedStatus(currentStep, currentOption - 1, false);
+              // Move to the previous option
               setCurrentOption(currentOption - 1);
             } else {
-              alert("First");
+              alert("This is the first step.");
             }
           }}
           isPrevDisabled={isPrevDisabled()}

@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
 import BuyerWorkflow from './pages/buyer_workflow';
+import SellerWorkflow from './pages/seller_workflow';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
         <Route path="/test_buyer/*" element={<BuyerWorkflow routing="path" path="/test_buyer" />} />
+        <Route path="/test_seller/*" element={<SellerWorkflow routing="path" path="/test_seller" />} />
 
           {/* Protected routes */}
           <Route
