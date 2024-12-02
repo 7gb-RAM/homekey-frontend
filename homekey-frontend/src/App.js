@@ -19,7 +19,7 @@ function App() {
 
         {/* Main Layout */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<HomePage />} />
+          <Route path="/homepage" element={<HomePage />} />
           <Route path="/seller_workflow" element={<SellerWorkflow />} />
           <Route path="/buyer_workflow" element={<BuyerWorkflow />} />
         </Route>
