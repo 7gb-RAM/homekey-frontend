@@ -1,28 +1,22 @@
-import HomePage from './pages/home';
-import SellerWorkflow from './pages/seller_workflow';
-import Layout from './layout';
-import BuyerWorkflow from './pages/buyer_workflow';
+import SignIn from './pages/signin_page/signin';
+import SignUp from './pages/signup_page/signup';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { SignUp, useAuth } from '@clerk/clerk-react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/layout/Sidebar';
-import TopBar from './components/layout/TopBar';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
-import SignInPage from './components/auth/SignInPage';
-
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
-  const { isLoaded, isSignedIn } = useAuth();
+  // const { isLoaded, isSignedIn } = useAuth();
   
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  }
+  // if (!isLoaded) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!isSignedIn) {
-    return <Navigate to="/sign-in" replace />;
-  }
+  // if (!isSignedIn) {
+  //   return <Navigate to="/sign-in" replace />;
+  // }
 
   return children;
 };
@@ -33,7 +27,7 @@ const AuthenticatedLayout = ({ children }) => {
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       <Sidebar />
       <div className="flex-1">
-        <TopBar />
+        {/* <TopBar /> */}
         <main>
           {children}
         </main>
