@@ -79,7 +79,7 @@ export function SignUpForm() {
         task_progress: {},
         role_id: role_id,
       };
-
+      console.log("User payload:", payload);
 
       /*
 
