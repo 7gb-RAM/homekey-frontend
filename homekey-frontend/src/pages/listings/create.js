@@ -5,35 +5,33 @@ import SellerWorkflow from "../seller_workflow";
 import axios from "axios";
 import { useState } from "react";
 import Loader from "../../components/loader";
-function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
-  
+// sleep time expects milliseconds
+function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 export function CreateListing() {
   const [isLoading, setLoading] = useState(false);
   const callCreateApi = (data) => {
     setLoading(true);
-    sleep(500).then(() => {
-        // Do something after the sleep!
-    });
-    axios
-      .post("http://localhost:5001/listings/create_listing", data, {
-        headers: {
-          "Content-Type": "application/json",  
-          Authorization: "Bearer your-auth-token", 
-        },
-      })
-      .then((response) => {
-        console.log(response);
-        const listings = [];
-        response.data.map((listing) => {
-          listings.push(listing);
+
+    sleep(1000).then(() => {
+      axios
+        .post("http://localhost:5001/listings/create_listing", data, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer your-auth-token",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          navigate("/listings");
+          setLoading(false);
+        })
+        .catch((error) => {
+          setLoading(false);
         });
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-      });
+    });
   };
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -47,7 +45,7 @@ export function CreateListing() {
       }
     }
     console.log(formValues);
-    callCreateApi({...formValues, user_id:1});
+    callCreateApi({ ...formValues, user_id: 1 });
   };
   const navigate = useNavigate();
 
