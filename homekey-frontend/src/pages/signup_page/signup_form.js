@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import {
-  ShoppingCartIcon,
-  StoreIcon,
-  BuildingIcon,
-} from "lucide-react";
+import { ShoppingCartIcon, StoreIcon, BuildingIcon } from "lucide-react";
+import { sleep } from "../../App";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loader from "../../components/loader";
 
 export function SignUpForm() {
+  const [isLoading, setLoading] = useState(false);
+  const navigator = useNavigate();
   // Form state
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState("");
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -53,7 +55,7 @@ export function SignUpForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -74,26 +76,35 @@ export function SignUpForm() {
       };
 
       try {
-        const response = await fetch('http://localhost:5001/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
+        setLoading(true);
+        sleep(1000).then(async () => {
+          const response = await fetch("http://localhost:5001/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+          setLoading(false);
+          const data = await response.json();
+          console.log(data);
+          
+          if (response.ok) {
+            toast.success("User registered successfully");
+            localStorage.setItem("user_id", data.user_id);
+            localStorage.setItem("role", data.role);
+
+            navigator("/");
+          } else {
+            // Handle errors (e.g., email already exists)
+            toast .error(data.error || "An error occurred");
+            // setErrors({ apiError: data.error || 'An error occurred' });
+          }
         });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          // Redirect to dashboard on successful sign-up
-          window.location.href = '/test_buyer';
-        } else {
-          // Handle errors (e.g., email already exists)
-          setErrors({ apiError: data.error || 'An error occurred' });
-        }
       } catch (error) {
-        console.error('Error:', error);
-        setErrors({ apiError: 'Server error. Please try again later.' });
+        setLoading(false);
+        console.error("Error:", error);
+        setErrors({ apiError: "Server error. Please try again later." });
       }
     }
   };
@@ -117,9 +128,7 @@ export function SignUpForm() {
             className="py-2 px-3 rounded-lg w-full border border-gray-300"
             required
           />
-          {errors.firstName && (
-            <div className="text-red-500 text-sm mt-1">{errors.firstName}</div>
-          )}
+          {errors.firstName && <div className="text-red-500 text-sm mt-1">{errors.firstName}</div>}
         </Form.Group>
 
         <Form.Group controlId="lastName" className="w-1/2">
@@ -132,9 +141,7 @@ export function SignUpForm() {
             className="py-2 px-3 rounded-lg w-full border border-gray-300"
             required
           />
-          {errors.lastName && (
-            <div className="text-red-500 text-sm mt-1">{errors.lastName}</div>
-          )}
+          {errors.lastName && <div className="text-red-500 text-sm mt-1">{errors.lastName}</div>}
         </Form.Group>
       </div>
 
@@ -149,9 +156,7 @@ export function SignUpForm() {
           className="py-2 px-3 rounded-lg w-full border border-gray-300"
           required
         />
-        {errors.email && (
-          <div className="text-red-500 text-sm mt-1">{errors.email}</div>
-        )}
+        {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
       </Form.Group>
 
       {/* Password Field */}
@@ -165,9 +170,7 @@ export function SignUpForm() {
           className="py-2 px-3 rounded-lg w-full border border-gray-300"
           required
         />
-        {errors.password && (
-          <div className="text-red-500 text-sm mt-1">{errors.password}</div>
-        )}
+        {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
       </Form.Group>
 
       {/* Confirm Password Field */}
@@ -181,24 +184,16 @@ export function SignUpForm() {
           className="py-2 px-3 rounded-lg w-full border border-gray-300"
           required
         />
-        {errors.confirmPassword && (
-          <div className="text-red-500 text-sm mt-1">{errors.confirmPassword}</div>
-        )}
+        {errors.confirmPassword && <div className="text-red-500 text-sm mt-1">{errors.confirmPassword}</div>}
       </Form.Group>
 
       {/* Prompt */}
-      <p className="text-blue-600 text-center">
-        Please select your role from the options below:
-      </p>
+      <p className="text-blue-600 text-center">Please select your role from the options below:</p>
 
       {/* Role Selection */}
       <Form.Group>
-        {errors.role && (
-          <div className="text-red-500 text-sm text-center mb-2">{errors.role}</div>
-        )}
-        {errors.apiError && (
-          <div className="text-red-500 text-sm text-center mb-2">{errors.apiError}</div>
-        )}
+        {errors.role && <div className="text-red-500 text-sm text-center mb-2">{errors.role}</div>}
+        {errors.apiError && <div className="text-red-500 text-sm text-center mb-2">{errors.apiError}</div>}
         <div className="flex justify-center space-x-2">
           <button
             type="button"
@@ -207,7 +202,7 @@ export function SignUpForm() {
                 ? "bg-blue-500 text-white border-blue-500"
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
             }`}
-            onClick={() => selectRole("seller")}
+            onClick={() => selectRole("Seller")}
           >
             <StoreIcon className="h-4 w-4 mr-1" />
             <span>Seller</span>
@@ -220,7 +215,7 @@ export function SignUpForm() {
                 ? "bg-blue-500 text-white border-blue-500"
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
             }`}
-            onClick={() => selectRole("buyer")}
+            onClick={() => selectRole("Buyer")}
           >
             <ShoppingCartIcon className="h-4 w-4 mr-1" />
             <span>Buyer</span>
@@ -233,7 +228,7 @@ export function SignUpForm() {
                 ? "bg-blue-500 text-white border-blue-500"
                 : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
             }`}
-            onClick={() => selectRole("fsh")}
+            onClick={() => selectRole("FSH")}
           >
             <BuildingIcon className="h-4 w-4 mr-1" />
             <span>FSH</span>
@@ -242,17 +237,14 @@ export function SignUpForm() {
       </Form.Group>
 
       {/* Submit Button */}
-      <Button
-        type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
-      >
-        Create Account
+      <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+        {isLoading ?  <Loader/> :"Create Account"}
       </Button>
 
       {/* Sign In Link */}
       <p className="text-center text-sm text-gray-500">
         Already have an account?{" "}
-        <a href="#" className="text-blue-600 hover:underline">
+        <a href="./sign-in" className="text-blue-600 hover:underline">
           Sign in
         </a>
       </p>

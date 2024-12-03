@@ -6,10 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import Loader from "../../components/loader";
 import { toast } from "react-toastify";
-// sleep time expects milliseconds
-function sleep(time) {
-  return new Promise((resolve) => setTimeout(resolve, time));
-}
+import { sleep } from "../../App";
 
 export function CreateListing() {
   const [isLoading, setLoading] = useState(false);
@@ -18,10 +15,9 @@ export function CreateListing() {
 
     sleep(1000).then(() => {
       axios
-        .post("http://localhost:5001/listings/create_listing", {}, {
+        .post("http://localhost:5001/listings/create_listing", data, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: "Bearer your-auth-token",
           },
         })
         .then((response) => {
@@ -53,7 +49,7 @@ export function CreateListing() {
       }
     }
     console.log(formValues);
-    callCreateApi({ ...formValues, user_id: 1 });
+    callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
   };
   const navigate = useNavigate();
 

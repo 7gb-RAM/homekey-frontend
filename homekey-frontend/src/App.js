@@ -13,21 +13,19 @@ import { Listings } from "./pages/listings";
 import SellerSidebar from "./components/layout/SellerSidebar";
 import TopBar from "./components/layout/TopBar";
 import { CreateListing } from "./pages/listings/create";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  // Import CSS for styling
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for styling
+
+export function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
-  // const { isLoaded, isSignedIn } = useAuth();
+  const user_id = localStorage.getItem("user_id");
 
-  // if (!isLoaded) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (!isSignedIn) {
-  //   return <Navigate to="/sign-in" replace />;
-  // }
-
+  if (!user_id) {
+    return <Navigate to="/sign-in" replace />;
+  }
   return children;
 };
 
@@ -41,18 +39,6 @@ const AuthenticatedLayout = () => {
       <div className="flex-1">
         <TopBar />
         <main>
-          {/* Toast */}
-          <ToastContainer
-            position="top-right" // Set the position where the toast will appear
-            autoClose={5000} // Auto-close the toast after 5 seconds
-            hideProgressBar={false} // Show or hide the progress bar
-            newestOnTop={false} // Stack new toasts on top
-            closeOnClick={true} // Close the toast on click
-            rtl={false} // Set to true for right-to-left languages
-            pauseOnFocusLoss={false} // Pause toast when focus is lost
-            draggable={true} // Allow toasts to be draggable
-            pauseOnHover={true} // Pause toast on hover
-          />
           <Outlet />
         </main>
       </div>

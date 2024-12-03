@@ -1,7 +1,8 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import Loader from "../../components/loader";
 
-export function SignInForm({onSubmit}) {
+export function SignInForm({onSubmit, isLoading}) {
   return (
     <Form onSubmit={onSubmit} className="space-y-3">
       <Form.Group controlId="email">
@@ -28,7 +29,7 @@ export function SignInForm({onSubmit}) {
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
       >
-        Sign In
+        {isLoading ?  <Loader/> :"Sign In"}
       </Button>
 
       <p className="text-center text-sm text-gray-500">

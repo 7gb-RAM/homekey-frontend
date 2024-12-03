@@ -21,6 +21,7 @@ const TopBar = () => {
   };
 
   const handleLogout = async () => {
+    localStorage.clear();
     navigate('/sign-in');
   };
 

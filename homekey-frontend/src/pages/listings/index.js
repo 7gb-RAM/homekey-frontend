@@ -37,7 +37,7 @@ export function Listings() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("http://localhost:5001/listings/get_my_listings?user_id=1")
+      .get(`http://localhost:5001/listings/get_my_listings?user_id=${localStorage.getItem("user_id")}`)
       .then((response) => {
         console.log(response);
         const listings = [];
