@@ -15,20 +15,20 @@ export function Listings() {
     { name: "Price", key: "price" },
     { name: "Status", key: "status", type: "chip" },
     { name: "Created At", key: "created_at" },
-    {
-      name: "Actions",
-      key: "actions",
-      type: "actions",
-      actions: [
-        {
-          name: "Edit",
-          icon: "",
-          onClick: (id) => {
-            navigateToEdit(id);
-          },
-        },
-      ],
-    }, // For actions like Edit/Delete
+    // {
+    //   name: "Actions",
+    //   key: "actions",
+    //   type: "actions",
+    //   actions: [
+    //     {
+    //       name: "Edit",
+    //       icon: "",
+    //       onClick: (id) => {
+    //         navigateToEdit(id);
+    //       },
+    //     },
+    //   ],
+    // }, // For actions like Edit/Delete
   ];
 
   const [isLoading, setLoading] = useState(false);
