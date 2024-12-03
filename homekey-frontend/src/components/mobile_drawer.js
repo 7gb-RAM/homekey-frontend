@@ -31,14 +31,14 @@ export default function MobileDailog({title, isOpen, onClose, children}) {
       <div className="fixed inset-0 z-40 flex">
         <DialogPanel
           transition
-          className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
+          className="relative ml-auto flex size-full max-w-xs transform flex-col overflow-y-auto bg-strokedark py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
         >
           <div className="flex items-center justify-between px-4">
-            <h2 className="text-lg font-medium text-gray-900">{title}</h2>
+            <h2 className="text-lg font-medium text-white">{title}</h2>
             <button
               type="button"
               onClick={() => onClose(false)}
-              className="-mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+              className="-mr-2 flex size-10 items-center justify-center rounded-md bg-strokedark p-2 text-white"
             >
               <span className="sr-only">Close menu</span>
               <XMarkIcon aria-hidden="true" className="size-6" />

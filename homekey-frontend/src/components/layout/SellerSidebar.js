@@ -20,9 +20,9 @@ const SellerSidebar = () => {
       <div className="w-64 bg-white dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <div className="mb-8">
           <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
-          <button className="w-full bg-primary text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-primary/90">
+          {/* <button className="w-full bg-primary text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-primary/90">
             <span>Add Listing</span>
-          </button>
+          </button> */}
         </div>
         
         <nav>

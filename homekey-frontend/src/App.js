@@ -12,6 +12,8 @@ import SellerDashboard from './pages/dashboards/SellerDashboard';
 import { Listings } from './pages/listings';
 import SellerSidebar from './components/layout/SellerSidebar';
 import TopBar from './components/layout/TopBar';
+import { EditListing } from './pages/listings/edit';
+import { CreateListing } from './pages/listings/create';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -66,7 +68,11 @@ function App() {
             }
           >
             <Route index element={<SellerDashboard />} />
+            {/* LISTINGS */}
             <Route path="/listings" element={<Listings />} />
+            <Route path="/listings/create" element={<CreateListing />} />
+            <Route path="/listings/:id/edit" element={<EditListing />} />
+            
             <Route path="/settings" element={<Listings />} />
           </Route>
         </Routes>
