@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { FileUpload } from "../../components/file_upload";
 import { SecondaryBtn } from "../../components/secondary_btn";
-import SellerWorkflow from "../seller_workflow";
+import SellerWorkflow from "../workflows/seller_workflow";
 import axios from "axios";
 import { useState } from "react";
 import Loader from "../../components/loader";

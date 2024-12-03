@@ -4,8 +4,8 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";
-import BuyerWorkflow from "./pages/buyer_workflow";
-import SellerWorkflow from "./pages/seller_workflow";
+import BuyerWorkflow from "./pages/workflows/buyer_workflow";
+import SellerWorkflow from "./pages/workflows/seller_workflow";
 import BuyerDashboard from "./pages/dashboards/BuyerDashboard";
 import BuyerSidebar from "./components/layout/BuyerSidebar";
 import SellerDashboard from "./pages/dashboards/SellerDashboard";
@@ -35,6 +35,7 @@ const AuthenticatedLayout = () => {
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* This is where we decide whether to use the buyer or seller sidebar */}
       {/* <BuyerSidebar /> */}
+      {/* <FshSidebar /> */}
       <SellerSidebar />
       <div className="flex-1">
         <TopBar />
