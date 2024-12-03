@@ -1,17 +1,20 @@
 import SignIn from './pages/signin_page/signin';
 import SignUp from './pages/signup_page/signup';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
 import BuyerWorkflow from './pages/buyer_workflow';
 import SellerWorkflow from './pages/seller_workflow';
 import BuyerDashboard from './pages/dashboards/BuyerDashboard';
 import BuyerSidebar from './components/layout/BuyerSidebar';
+import SellerDashboard from './pages/dashboards/SellerDashboard';
+import { Listings } from './pages/listings';
+import SellerSidebar from './components/layout/SellerSidebar';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
-  
+
   // if (!isLoaded) {
   //   return <div>Loading...</div>;
   // }
@@ -24,15 +27,16 @@ const ProtectedRoute = ({ children }) => {
 };
 
 // Layout wrapper for authenticated pages
-const AuthenticatedLayout = ({ children }) => {
+const AuthenticatedLayout = () => {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* This is where we decide whether to use the buyer or seller sidebar */}
-      <BuyerSidebar />
+      {/* <BuyerSidebar /> */}
+      <SellerSidebar />
       <div className="flex-1">
         {/* <TopBar /> */}
         <main>
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
@@ -44,7 +48,6 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/sign-up" />} />
           {/* Authentication Routes */}
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
@@ -57,23 +60,14 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <AuthenticatedLayout>
-                  {/* And this is where we decide whether to use the buyer or seller dashboard */}
-                  <BuyerDashboard />
-                </AuthenticatedLayout>
+                <AuthenticatedLayout />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <AuthenticatedLayout>
-                  <Settings />
-                </AuthenticatedLayout>
-              </ProtectedRoute>
-            }
-          />
+          >
+            <Route index element={<SellerDashboard />} />
+            <Route path="/listings" element={<Listings />} />
+            <Route path="/settings" element={<Listings />} />
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

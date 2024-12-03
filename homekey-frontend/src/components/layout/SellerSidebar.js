@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { HomeIcon, ClipboardDocumentListIcon, DocumentIcon, CurrencyDollarIcon, ChatBubbleLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { DocumentCurrencyDollarIcon, HomeIcon, ClipboardDocumentListIcon, DocumentIcon, CurrencyDollarIcon, ChatBubbleLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link, useLocation } from 'react-router-dom';
 
 const SellerSidebar = () => {
+  const location = useLocation();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const menuItems = [
     { name: 'Overview', icon: HomeIcon, path: '/' },
+    { name: 'Listings', icon: DocumentCurrencyDollarIcon, path: '/listings' },
     { name: 'Tasks', icon: ClipboardDocumentListIcon, path: '/tasks' },
     { name: 'Documents', icon: DocumentIcon, path: '/documents' },
     { name: 'Transactions', icon: CurrencyDollarIcon, path: '/transactions' },
@@ -17,11 +20,8 @@ const SellerSidebar = () => {
       <div className="w-64 bg-white dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200">
         <div className="mb-8">
           <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
-          <select className="w-full p-2 border rounded-lg mb-4 bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-200 dark:border-gray-600">
-            <option>Select Property</option>
-          </select>
           <button className="w-full bg-primary text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-primary/90">
-            <span>Add Property</span>
+            <span>Add Listing</span>
           </button>
         </div>
         
@@ -30,7 +30,7 @@ const SellerSidebar = () => {
             <a
               key={item.name}
               href={item.path}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200"
+              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200 ${location.pathname === item.path && "bg-gray-700"}`}
             >
               <item.icon className="h-5 w-5" />
               <span>{item.name}</span>
