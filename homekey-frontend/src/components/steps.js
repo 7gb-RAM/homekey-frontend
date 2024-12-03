@@ -29,7 +29,7 @@ export function Steps({
     );
   };
   return (
-    <div className="bg-white">
+    <div>
       <div>
         <MobileDialog title={"Steps"} isOpen={mobileFiltersOpen} onClose={setMobileFiltersOpen}>
           {getStepsForm({ isMobile: true })}

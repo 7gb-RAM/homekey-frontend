@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { SignUpForm } from "./signup_form";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+
+  const navigate = useNavigate();
+  
+  useEffect(()=>{
+    if(localStorage.getItem("user_id")){
+      navigate('/')
+    }
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 p-4">
       <Card className="w-full max-w-md p-6 bg-white shadow-xl rounded-xl">

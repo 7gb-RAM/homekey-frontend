@@ -1,49 +1,45 @@
-import SignIn from './pages/signin_page/signin';
-import SignUp from './pages/signup_page/signup';
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Settings from './pages/Settings';
-import { ThemeProvider } from './context/ThemeContext';
-import SellerDashboard from './pages/dashboards/SellerDashboard';
-import BuyerSidebar from './components/layout/BuyerSidebar';
-import BuyerDashboard from './pages/dashboards/BuyerDashboard';
-import SellerSidebar from './components/layout/SellerSidebar';
+import SignIn from "./pages/signin_page/signin";
+import SignUp from "./pages/signup_page/signup";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import Settings from "./pages/Settings";
+import { ThemeProvider } from "./context/ThemeContext";
+import BuyerWorkflow from "./pages/buyer_workflow";
+import SellerWorkflow from "./pages/seller_workflow";
+import BuyerDashboard from "./pages/dashboards/BuyerDashboard";
+import BuyerSidebar from "./components/layout/BuyerSidebar";
+import SellerDashboard from "./pages/dashboards/SellerDashboard";
+import { Listings } from "./pages/listings";
+import SellerSidebar from "./components/layout/SellerSidebar";
+import TopBar from "./components/layout/TopBar";
+import { CreateListing } from "./pages/listings/create";
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for styling
+
+export function sleep(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
-  // const { isLoaded, isSignedIn } = useAuth();
-  
-  // if (!isLoaded) {
-  //   return <div>Loading...</div>;
-  // }
+  const user_id = localStorage.getItem("user_id");
 
-  // if (!isSignedIn) {
-  //   return <Navigate to="/sign-in" replace />;
-  // }
-
+  if (!user_id) {
+    return <Navigate to="/sign-in" replace />;
+  }
   return children;
 };
 
-{/* We'll have to figure out a way to make these two as one */}
-const AuthenticatedLayout = ({ children }) => {
-  return (
-    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <BuyerSidebar/>
-      <div className="flex-1">
-        <main>
-          {children}
-        </main>
-      </div>
-    </div>
-  );
-};
-const AuthenticatedLayout2 = ({ children }) => {
+// Layout wrapper for authenticated pages
+const AuthenticatedLayout = () => {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* This is where we decide whether to use the buyer or seller sidebar */}
-      <SellerSidebar/>
+      {/* <BuyerSidebar /> */}
+      <SellerSidebar />
       <div className="flex-1">
+        <TopBar />
         <main>
-          {children}
+          <Outlet />
         </main>
       </div>
     </div>
@@ -55,36 +51,24 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/sign-up" />} />
           {/* Authentication Routes */}
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
           <Route path="/test_buyer/*" 
             element={
-              <AuthenticatedLayout>
-                <BuyerDashboard routing="path" path="/test_buyer" />
-              </AuthenticatedLayout>
-            }
-          />
-          <Route path="/test_seller/*" 
-            element={
-              <AuthenticatedLayout2>
-                <SellerDashboard routing="path" path="/test_buyer" />
-              </AuthenticatedLayout2>
-            }
-          />
-          {/* Protected routes */}
-          <Route
-            path="/settings"
-            element={
               <ProtectedRoute>
-                <AuthenticatedLayout>
-                  <Settings />
-                </AuthenticatedLayout>
+                <AuthenticatedLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<SellerDashboard />} />
+            {/* LISTINGS */}
+            <Route path="/listings" element={<Listings />} />
+            <Route path="/listings/create" element={<CreateListing />} />
+
+            <Route path="/settings" element={<Listings />} />
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

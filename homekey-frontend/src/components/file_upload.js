@@ -27,12 +27,12 @@ export function FileUpload() {
   };
 
   return (
-    <div className="col-span-full">
-      <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900">
-        Cover photo
+    <div className="col-span-full m-2">
+      <label htmlFor="cover-photo" className="block text-white text-sm/6 font-medium text-gray-900">
+        Property Photo
       </label>
       <div
-        className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+        className="mt-2 flex justify-center bg-white rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
         onDragEnter={handleDragOver} // Optional for better UX
@@ -61,7 +61,7 @@ export function FileUpload() {
 
       {/* Optional: Display the uploaded file name */}
       {file && (
-        <div className="mt-4 text-sm text-gray-600">
+        <div className="mt-4 text-sm text-white">
           <p>Uploaded file: {file.name}</p>
         </div>
       )}

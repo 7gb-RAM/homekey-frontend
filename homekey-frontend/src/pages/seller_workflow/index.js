@@ -13,129 +13,17 @@ const initialStepsState = [
       { index: 0, value: "1-1", label: "Notify FSH of intent to sell", checked: false },
       {
         index: 1,
-        value: "1-2",
-        label: "Prepare your home for listing (photo-ready)",
-        checked: false,
-      },
-      {
-        index: 2,
-        value: "1-3",
+        value: "1-1",
         label: "Provide FSH with a photo for the website",
         checked: false,
       },
       {
-        index: 3,
-        value: "1-4",
+        index: 2,
+        value: "1-2",
         label: "Enter sale listing in FSH website",
         checked: false,
       },
-      { index: 4, value: "1-5", label: "Approve sale listing on FSH", checked: false },
-    ],
-  },
-  {
-    id: 2,
-    name: "Pre-Escrow Actions and Buyer Interaction",
-    options: [
-      {
-        index: 0,
-        value: "2-1",
-        label: "Gather Seller's Disclosure documents",
-        checked: false,
-      },
-      {
-        index: 1,
-        value: "2-2",
-        label: "Order the Natural Hazards report ",
-        checked: false,
-      },
-      {
-        index: 2,
-        value: "2-3",
-        label: "Respond to buyers and show property ",
-        checked: false,
-      },
-      {
-        index: 3,
-        value: "2-4",
-        label: "Sign purchase contract or prepare counteroffer",
-        checked: false,
-      },
-      { index: 4, value: "2-5", label: "Finalize contract with buyer", checked: false },
-    ],
-  },
-  {
-    id: 3,
-    name: "Escrow Process and Inspections",
-    options: [
-      { index: 0, value: "3-1", label: "Order Termite/Pest inspection", checked: false },
-      {
-        index: 1,
-        value: "3-2",
-        label: "Schedule appraiser's appointment",
-        checked: false,
-      },
-      {
-        index: 2,
-        value: "3-3",
-        label: "Provide access for termite company",
-        checked: false,
-      },
-      {
-        index: 3,
-        value: "3-4",
-        label: "Ensure buyer orders property inspection",
-        checked: false,
-      },
-      { index: 4, value: "3-5", label: "Provide termite report to FSH", checked: false },
-    ],
-  },
-  {
-    id: 4,
-    name: "Final Disclosure and Contract Closing",
-    options: [
-      {
-        index: 0,
-        value: "4-1",
-        label: "Complete and sign disclosure documents",
-        checked: false,
-      },
-      {
-        index: 1,
-        value: "4-2",
-        label: "Fund or cure Section I Pest inspection items",
-        checked: false,
-      },
-      {
-        index: 2,
-        value: "4-3",
-        label: "Schedule signing of closing documents with the title company",
-        checked: false,
-      },
-      { index: 3, value: "4-4", label: "Provide keys to buyer", checked: false },
-    ],
-  },
-  {
-    id: 5,
-    name: "Post-Closing and Transfer",
-    options: [
-      {
-        index: 0,
-        value: "5-1",
-        label: "Transfer or set up utilities (PG&E, Water/Sewer, Garbage, Cable, etc.)",
-        checked: false,
-      },
-      {
-        index: 1,
-        value: "5-2",
-        label: "Receive funds from title company once escrow closes",
-        checked: false,
-      },
-      {
-        index: 2,
-        value: "5-3",
-        label: "Ensure sale listing is closed on the FSH website",
-        checked: false,
-      },
+      { index: 3, value: "1-3", label: "Approve sale listing on FSH", checked: false },
     ],
   },
 ];
@@ -157,9 +45,14 @@ export default function SellerWorkflow({ initialStep = 1, initialOption = 0 }) {
     return currentOption === 0;
   };
   const step = steps.find((step) => step.id === currentStep);
+  const onSubmit = (event)=>{
+    event.preventDefault();
+    console.log(event.target);
+  }
+  
   return (
     <Steps
-      title={"Seller Workflow"}
+      title={"Listings / Create"}
       steps={steps}
       mobileFiltersOpen={mobileFiltersOpen}
       setMobileFiltersOpen={setMobileFiltersOpen}
@@ -188,7 +81,93 @@ export default function SellerWorkflow({ initialStep = 1, initialOption = 0 }) {
           isPrevDisabled={isPrevDisabled()}
           isNextDisabled={isNextDisabled()}
         />
-        <FileUpload />
+        <form onSubmit={onSubmit}>
+          {["data"].map((e) => {
+            console.log(step.options[currentOption]);
+            if (step.options[currentOption].index === 0) {
+              return (
+                <div>
+                  <div class="sm:col-span-3 m-2">
+                    <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+                      Title
+                    </label>
+                    <div class="mt-2">
+                      <input
+                        type="text"
+                        required
+                        name="first-name"
+                        id="first-name"
+                        autocomplete="given-name"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-span-full m-2">
+                    <label for="about" class="block text-lg text-white font-medium text-gray-900">
+                      About
+                    </label>
+                    <div class="mt-2">
+                      <textarea
+                        name="about"
+                        required
+                        id="about"
+                        rows="3"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                      ></textarea>
+                    </div>
+                    <p class="mt-3 text-sm/6 text-white">Write a few sentences about your property.</p>
+                  </div>
+                </div>
+              );
+            }
+            if (step.options[currentOption].index === 1) {
+              return (
+                <div className="text-white">
+                  <FileUpload key={step.options[currentOption].value} />
+                </div>
+              );
+            }
+            if (step.options[currentOption].index === 2) {
+              return <div> 
+                <div class="sm:col-span-3 m-2">
+                    <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+                      Address
+                    </label>
+                    <div class="mt-2">
+                      <input
+                        type="text"
+                        required
+                        name="first-name"
+                        id="first-name"
+                        autocomplete="given-name"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                      />
+                    </div>
+                  </div>
+                  <div class="sm:col-span-3 m-2">
+                    <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+                      Price
+                    </label>
+                    <div class="mt-2">
+                      <input
+                        type="text"
+                        required
+                        name="first-name"
+                        id="first-name"
+                        autocomplete="given-name"
+                        class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                      />
+                    </div>
+                  </div>
+              </div>;
+            }
+            if (step.options[currentOption].index === 3) {
+              return <div> 4</div>;
+            }
+            <div> default</div>;
+          })}
+        </form>
       </div>
     </Steps>
   );
