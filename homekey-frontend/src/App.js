@@ -2,12 +2,12 @@ import SignIn from './pages/signin_page/signin';
 import SignUp from './pages/signup_page/signup';
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Sidebar from './components/layout/Sidebar';
-import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
 import BuyerWorkflow from './pages/buyer_workflow';
 import SellerWorkflow from './pages/seller_workflow';
+import BuyerDashboard from './pages/dashboards/BuyerDashboard';
+import BuyerSidebar from './components/layout/BuyerSidebar';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -27,7 +27,8 @@ const ProtectedRoute = ({ children }) => {
 const AuthenticatedLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <Sidebar />
+      {/* This is where we decide whether to use the buyer or seller sidebar */}
+      <BuyerSidebar />
       <div className="flex-1">
         {/* <TopBar /> */}
         <main>
@@ -56,7 +57,8 @@ function App() {
             element={
               <ProtectedRoute>
                 <AuthenticatedLayout>
-                  <Dashboard />
+                  {/* And this is where we decide whether to use the buyer or seller dashboard */}
+                  <BuyerDashboard />
                 </AuthenticatedLayout>
               </ProtectedRoute>
             }

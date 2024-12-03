@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HomeIcon, ClipboardDocumentListIcon, DocumentIcon, CurrencyDollarIcon, ChatBubbleLeftIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-const Sidebar = () => {
+const SellerSidebar = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const menuItems = [
@@ -82,4 +82,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SellerSidebar;

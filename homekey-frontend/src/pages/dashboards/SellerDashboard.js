@@ -1,11 +1,11 @@
 import React from 'react';
-import StatCard from '../components/dashboard/StatCard';
-import PropertyCard from '../components/dashboard/PropertyCard';
-import TaskBoard from '../components/dashboard/TaskBoard';
-import DocumentList from '../components/dashboard/DocumentList';
+import StatCard from '../../components/dashboard/StatCard';
+import PropertyCard from '../../components/dashboard/PropertyCard';
+import TaskBoard from '../../components/dashboard/TaskBoard';
+import DocumentList from '../../components/dashboard/DocumentList';
 import { HomeIcon, ClockIcon, CurrencyDollarIcon, DocumentIcon } from '@heroicons/react/24/outline';
 
-const Dashboard = () => {
+const SellerDashboard = () => {
   const stats = [
     {
       title: 'Total Properties',
@@ -100,4 +100,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default SellerDashboard;
