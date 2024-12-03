@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 export function SignUpForm() {
+  // Form state
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -62,29 +63,18 @@ export function SignUpForm() {
     e.preventDefault();
 
     if (validateForm()) {
-      const roleMapping = {
-        'seller': 1,
-        'buyer': 2,
-        'fsh': 3,
-      };
-
-      const role_id = roleMapping[selectedRole];
+      const name = `${formData.firstName} ${formData.lastName}`;
 
       // Create the payload
       const payload = {
-        name: `${formData.firstName} ${formData.lastName}`,
+        name: name,
         email: formData.email,
         password: formData.password,
-        created_at: new Date().toISOString(),
-        task_progress: {},
-        role_id: role_id,
+        role: selectedRole,
       };
-      console.log("User payload:", payload);
-
-      /*
 
       try {
-        const response = await fetch('http://localhost:5000/api/users', {
+        const response = await fetch('http://localhost:5001/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -95,17 +85,16 @@ export function SignUpForm() {
         const data = await response.json();
 
         if (response.ok) {
-          // Redirect to /homepage on successful sign-up
-          window.location.href = '/homepage';
+          // Redirect to dashboard on successful sign-up
+          window.location.href = '/test_buyer';
         } else {
           // Handle errors (e.g., email already exists)
-          setErrors({ apiError: data.message || 'An error occurred' });
+          setErrors({ apiError: data.error || 'An error occurred' });
         }
       } catch (error) {
         console.error('Error:', error);
         setErrors({ apiError: 'Server error. Please try again later.' });
       }
-      */
     }
   };
 
@@ -165,6 +154,7 @@ export function SignUpForm() {
         )}
       </Form.Group>
 
+      {/* Password Field */}
       <Form.Group controlId="password">
         <Form.Control
           type="password"
@@ -180,6 +170,7 @@ export function SignUpForm() {
         )}
       </Form.Group>
 
+      {/* Confirm Password Field */}
       <Form.Group controlId="confirmPassword">
         <Form.Control
           type="password"
@@ -195,10 +186,12 @@ export function SignUpForm() {
         )}
       </Form.Group>
 
+      {/* Prompt */}
       <p className="text-blue-600 text-center">
         Please select your role from the options below:
       </p>
 
+      {/* Role Selection */}
       <Form.Group>
         {errors.role && (
           <div className="text-red-500 text-sm text-center mb-2">{errors.role}</div>
@@ -248,6 +241,7 @@ export function SignUpForm() {
         </div>
       </Form.Group>
 
+      {/* Submit Button */}
       <Button
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
@@ -255,9 +249,10 @@ export function SignUpForm() {
         Create Account
       </Button>
 
+      {/* Sign In Link */}
       <p className="text-center text-sm text-gray-500">
         Already have an account?{" "}
-        <a href="./sign-in" className="text-blue-600 hover:underline">
+        <a href="#" className="text-blue-600 hover:underline">
           Sign in
         </a>
       </p>

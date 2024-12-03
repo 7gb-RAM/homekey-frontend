@@ -1,7 +1,7 @@
 import SignIn from './pages/signin_page/signin';
 import SignUp from './pages/signup_page/signup';
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
 import BuyerWorkflow from './pages/buyer_workflow';
@@ -44,12 +44,13 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-        {/* Authentication Routes */}
-        <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
-        <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
+          <Route path="/" element={<Navigate to="/sign-up" />} />
+          {/* Authentication Routes */}
+          <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
+          <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
-        <Route path="/test_buyer/*" element={<BuyerWorkflow routing="path" path="/test_buyer" />} />
-        <Route path="/test_seller/*" element={<SellerWorkflow routing="path" path="/test_seller" />} />
+          <Route path="/test_buyer/*" element={<BuyerWorkflow routing="path" path="/test_buyer" />} />
+          <Route path="/test_seller/*" element={<SellerWorkflow routing="path" path="/test_seller" />} />
 
           {/* Protected routes */}
           <Route
