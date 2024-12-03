@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 
-export function SignInForm() {
+export function SignInForm({onSubmit}) {
   return (
-    <Form onSubmit={(e) => e.preventDefault()} className="space-y-3">
+    <Form onSubmit={onSubmit} className="space-y-3">
       <Form.Group controlId="email">
         <Form.Control
           type="email"

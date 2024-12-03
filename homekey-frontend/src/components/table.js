@@ -4,45 +4,43 @@ export function Table({ title, headers, rowData }) {
       <h4 className="mb-6 text-xl font-semibold text-white">{title}</h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-meta-4 sm:grid-cols-5">
-          {headers.map((header, index) => {
-            return (
-              <div className={`${index !== 0 && "text-center"} p-2.5 xl:p-5`}>
-                <h5 className="text-sm font-medium uppercase xsm:text-base">{header.name}</h5>
-              </div>
-            );
-          })}
+        {/* Table headers */}
+        <div className={`grid grid-cols-${headers.length} rounded-sm bg-meta-4 sm:grid-cols-${Math.min(headers.length, 5)}`}>
+          {headers.map((header, index) => (
+            <div
+              className={`${index !== 0 && "text-center"} p-2.5 xl:p-5`}
+              key={header.key} // Make sure each header is uniquely identified
+            >
+              <h5 className="text-sm font-medium uppercase xsm:text-base">{header.name}</h5>
+            </div>
+          ))}
         </div>
 
-        {rowData.map((brand, key) => (
+        {/* Table rows */}
+        {rowData.map((row, key) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
+            className={`grid grid-cols-${headers.length} sm:grid-cols-${Math.min(headers.length, 5)} ${
               key === rowData.length - 1 ? "" : "border-b border-strokedark"
             }`}
             key={key}
           >
-            <div className="flex items-center gap-3 p-2.5 xl:p-5">
-              <div className="flex-shrink-0">
-                <img src={brand.logo} alt="Brand" />
-              </div>
-              <p className="hidden text-white sm:block">{brand.name}</p>
-            </div>
+            {headers.map((header) => {
+              const value = row[header.key]; // Access the row data dynamically using the header key
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-white">{brand.visitors}K</p>
-            </div>
-
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-meta-3">${brand.revenues}</p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-white">{brand.sales}</p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-meta-5">{brand.conversion}%</p>
-            </div>
+              return (
+                <div
+                  className={`flex items-center justify-center p-2.5 xl:p-5`}
+                  key={header.key} // Make sure each column is uniquely identified
+                >
+                  {/* Render content based on column data */}
+                  {header.isImage ? (
+                    <img src={value} alt={header.name} className="flex-shrink-0" />
+                  ) : (
+                    <p className={`text-white ${header.customClass || ""}`}>{value}</p>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

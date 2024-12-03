@@ -11,6 +11,7 @@ import BuyerSidebar from './components/layout/BuyerSidebar';
 import SellerDashboard from './pages/dashboards/SellerDashboard';
 import { Listings } from './pages/listings';
 import SellerSidebar from './components/layout/SellerSidebar';
+import TopBar from './components/layout/TopBar';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -34,7 +35,7 @@ const AuthenticatedLayout = () => {
       {/* <BuyerSidebar /> */}
       <SellerSidebar />
       <div className="flex-1">
-        {/* <TopBar /> */}
+        <TopBar />
         <main>
           <Outlet />
         </main>

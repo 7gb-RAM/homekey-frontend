@@ -1,8 +1,18 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { SignInForm } from "./signin_form";
-
+import axios from "../../axios_wrapper"
 export default function SignIn() {
+  const onSubmit = async (e)=> {
+    e.preventDefault();
+    const email = e.target.email.value
+    const password = e.target.password.value
+    console.log(email);
+    console.log(password);
+    // const res = await axios.post({url: "/auth/login", data: {email, password}});
+    // console.log(res);
+
+  }
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 p-4">
       <Card className="w-full max-w-md p-6 bg-white shadow-xl rounded-xl">
@@ -15,7 +25,7 @@ export default function SignIn() {
               Enter your credentials
             </p>
           </div>
-          <SignInForm />
+          <SignInForm onSubmit={onSubmit}/>
         </div>
       </Card>
     </div>

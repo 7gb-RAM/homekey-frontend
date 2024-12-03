@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useClerk, useUser } from '@clerk/clerk-react';
 import {
   BellIcon,
   SunIcon,
@@ -15,8 +14,6 @@ const TopBar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const navigate = useNavigate();
-  const { signOut } = useClerk();
-  const { user } = useUser();
 
   const handleSettingsClick = () => {
     setIsSettingsOpen(false);
@@ -24,7 +21,6 @@ const TopBar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut();
     navigate('/sign-in');
   };
 
@@ -62,8 +58,8 @@ const TopBar = () => {
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <img
-              src={user?.imageUrl}
-              alt={user?.fullName || 'User'}
+              src={"logo"}
+              alt={'User'}
               className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-600"
             />
             <ChevronDownIcon className="h-4 w-4 text-gray-600 dark:text-gray-300" />

@@ -1,64 +1,53 @@
+import { useEffect, useState } from "react";
 import { Table } from "../../components/table";
+import axios from "axios";
+import Loader from "../../components/loader";
 
 export function Listings() {
   const headers = [
-    { name: "Title" },
-    { name: "Price" },
-    { name: "Description" },
-    { name: "Status" },
-    { name: "Address" },
-    // { name: "Actions" },
-  ];
-  const listingData = 
-  [
-    {
-      logo: "BrandOne",
-      name: "Google",
-      visitors: 3.5,
-      revenues: "5,768",
-      sales: 590,
-      conversion: 4.8,
-      conversion: 4.8,
-    },
-    {
-      logo: "BrandTwo",
-      name: "Twitter",
-      visitors: 2.2,
-      revenues: "4,635",
-      sales: 467,
-      conversion: 4.3,
-    },
-    {
-      logo: "BrandThree",
-      name: "Github",
-      visitors: 2.1,
-      revenues: "4,290",
-      sales: 420,
-      conversion: 3.7,
-    },
-    {
-      logo: "BrandFour",
-      name: "Vimeo",
-      visitors: 1.5,
-      revenues: "3,580",
-      sales: 389,
-      conversion: 2.5,
-    },
-    {
-      logo: "BrandFive",
-      name: "Facebook",
-      visitors: 3.5,
-      revenues: "6,768",
-      sales: 390,
-      conversion: 4.2,
-    },
+    { name: "Title", key: "title" },
+    { name: "Address", key: "address" },
+    { name: "Price", key: "price" },
+    { name: "Status", key: "status" },
+    { name: "Description", key: "description" },
+    { name: "Created At", key: "created_at" },
+    { name: "Actions", key: "actions" }, // For actions like Edit/Delete
   ];
   
+  const [isLoading, setLoading] = useState(false);
+  const [listingData, setListingData] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get("http://localhost:5001/listings/get_my_listings?user_id=1")
+      .then((response) => {
+        console.log(response);
+        const listings = [];
+        response.data.map((listing) => {
+          listings.push(listing);
+        });
+        setListingData(listings);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
+  }, []);
+
   return (
-    <div>
-      <div className="mt-24 m-6">
-        <Table title={"Listings"} headers={headers} rowData={listingData} />
-      </div>
-    </div>
+    <>
+      <div className="p-8">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Listings</h1>
+
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="mt-8">
+            <Table title={"Listings"} headers={headers} rowData={listingData} />
+          </div>
+        )}
+      </div>{" "}
+    </>
   );
 }
