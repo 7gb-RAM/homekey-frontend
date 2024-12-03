@@ -5,12 +5,12 @@ export function Table({ title, headers, rowData }) {
     <div className="rounded-sm border px-5 pt-6 text-white pb-2.5 shadow-default border-strokedark bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-white">{title}</h4>
 
-      <div className="overflow-x-auto flex flex-col">
+      <div className="overflow-x-auto">
         {/* Table headers */}
-        <div className={`grid grid-cols-${headers.length} rounded-sm bg-meta-4 sm:grid-cols-${Math.min(headers.length, 5)}`}>
+        <div className={`flex justify-evenly rounded-sm bg-meta-4`}>
           {headers.map((header, index) => (
             <div
-              className={`${ "text-center"} p-2.5 xl:p-5`}
+              className={`${"text-center"} p-2.5 xl:p-5`}
               key={header.key} // Make sure each header is uniquely identified
             >
               <h5 className="text-sm font-medium uppercase xsm:text-base">{header.name}</h5>
@@ -21,26 +21,33 @@ export function Table({ title, headers, rowData }) {
         {/* Table rows */}
         {rowData.map((row, key) => (
           <div
-            className={` overflow-x-auto grid grid-cols-${headers.length} sm:grid-cols-${Math.min(headers.length, 5)} ${
+            className={`flex justify-evenly ${
               key === rowData.length - 1 ? "" : "border-b border-strokedark"
             }`}
             key={key}
           >
             {headers.map((header) => {
               const value = row[header.key]; // Access the row data dynamically using the header key
-              const type = header.type
-              if(type === "actions"){
-                return <div className="flex flex-row justify-center items-center">
-                  {header.actions.map((action) => (<div>
-                    {/* {action.name} */}
-                    <div onClick={()=>action.onClick(row['id'])}> <PencilSquareIcon className="cursor-pointer size-5"/> </div>
-                  </div>))}
-                  {/* <img src={header.}/> */}
-                </div>
+              const type = header.type;
+              if (type === "actions") {
+                return (
+                  <div className="flex flex-row justify-center items-center">
+                    {header.actions.map((action) => (
+                      <div>
+                        {/* {action.name} */}
+                        <div onClick={() => action.onClick(row["id"])}>
+                          {" "}
+                          <PencilSquareIcon className="cursor-pointer size-5" />{" "}
+                        </div>
+                      </div>
+                    ))}
+                    {/* <img src={header.}/> */}
+                  </div>
+                );
               }
               return (
                 <div
-                  className={`flex items-center justify-center p-2.5 xl:p-5`}
+                  className={`flex  items-center justify-center p-2.5 xl:p-5`}
                   key={header.key} // Make sure each column is uniquely identified
                 >
                   {/* Render content based on column data */}
