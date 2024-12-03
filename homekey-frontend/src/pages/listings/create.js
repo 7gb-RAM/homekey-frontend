@@ -5,6 +5,7 @@ import SellerWorkflow from "../seller_workflow";
 import axios from "axios";
 import { useState } from "react";
 import Loader from "../../components/loader";
+import { toast } from "react-toastify";
 // sleep time expects milliseconds
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -17,7 +18,7 @@ export function CreateListing() {
 
     sleep(1000).then(() => {
       axios
-        .post("http://localhost:5001/listings/create_listing", data, {
+        .post("http://localhost:5001/listings/create_listing", {}, {
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer your-auth-token",
@@ -26,9 +27,16 @@ export function CreateListing() {
         .then((response) => {
           console.log(response);
           navigate("/listings");
+          toast.success("Successfully created listing")
           setLoading(false);
         })
         .catch((error) => {
+          let errorMsg = "Something went wrong"
+          if(error['response']['data']['error']){
+            errorMsg =  error['response']['data']['error'];
+          }
+          toast.error(errorMsg)
+          
           setLoading(false);
         });
     });
@@ -55,7 +63,7 @@ export function CreateListing() {
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Add Listing</h1>
           <div className="flex gap-2">
-            <SecondaryBtn title={"Cancel"} onClick={() => navigate("/listings")} />
+            <SecondaryBtn title={"Cancel"} onClick={() => navigate('/listings')} />
             <button
               type="submit"
               disabled={isLoading}
