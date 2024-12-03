@@ -4,6 +4,7 @@ import PropertyCard from '../../components/dashboard/PropertyCard';
 import TaskBoard from '../../components/dashboard/TaskBoard';
 import DocumentList from '../../components/dashboard/DocumentList';
 import { HomeIcon, ClockIcon, CurrencyDollarIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import SellerSidebar from '../../components/layout/SellerSidebar';
 
 const SellerDashboard = () => {
   const stats = [
@@ -91,6 +92,8 @@ const SellerDashboard = () => {
           <PropertyCard key={index} {...property} />
         ))}
       </div>
+
+      <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Tasks and Documents</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <TaskBoard tasks={tasks} />

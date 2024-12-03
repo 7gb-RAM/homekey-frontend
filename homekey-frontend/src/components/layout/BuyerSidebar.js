@@ -23,15 +23,14 @@ const BuyerSidebar = () => {
 
   return (
     <>
-      <div className="w-64 bg-white dark:bg-gray-800 h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200">
+      <div className="w-64 bg-white dark:bg-gray-800 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200 flex flex-col flex-shrink-0">
         {/* Logo */}
         <div className="mb-8">
           <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
-          {/* No select property dropdown or add property button */}
         </div>
 
         {/* Navigation Menu */}
-        <nav>
+        <nav className="flex-1">
           {menuItems.map((item) => (
             <a
               key={item.name}

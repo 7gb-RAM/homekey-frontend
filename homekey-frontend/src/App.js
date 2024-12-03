@@ -4,10 +4,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Settings from './pages/Settings';
 import { ThemeProvider } from './context/ThemeContext';
-import BuyerWorkflow from './pages/buyer_workflow';
-import SellerWorkflow from './pages/seller_workflow';
-import BuyerDashboard from './pages/dashboards/BuyerDashboard';
+import SellerDashboard from './pages/dashboards/SellerDashboard';
 import BuyerSidebar from './components/layout/BuyerSidebar';
+import BuyerDashboard from './pages/dashboards/BuyerDashboard';
+import SellerSidebar from './components/layout/SellerSidebar';
 // Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   // const { isLoaded, isSignedIn } = useAuth();
@@ -23,14 +23,25 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Layout wrapper for authenticated pages
+{/* We'll have to figure out a way to make these two as one */}
 const AuthenticatedLayout = ({ children }) => {
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* This is where we decide whether to use the buyer or seller sidebar */}
-      <BuyerSidebar />
+      <BuyerSidebar/>
       <div className="flex-1">
-        {/* <TopBar /> */}
+        <main>
+          {children}
+        </main>
+      </div>
+    </div>
+  );
+};
+const AuthenticatedLayout2 = ({ children }) => {
+  return (
+    <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      {/* This is where we decide whether to use the buyer or seller sidebar */}
+      <SellerSidebar/>
+      <div className="flex-1">
         <main>
           {children}
         </main>
@@ -49,21 +60,21 @@ function App() {
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
-          <Route path="/test_buyer/*" element={<BuyerWorkflow routing="path" path="/test_buyer" />} />
-          <Route path="/test_seller/*" element={<SellerWorkflow routing="path" path="/test_seller" />} />
-
-          {/* Protected routes */}
-          <Route
-            path="/"
+          <Route path="/test_buyer/*" 
             element={
-              <ProtectedRoute>
-                <AuthenticatedLayout>
-                  {/* And this is where we decide whether to use the buyer or seller dashboard */}
-                  <BuyerDashboard />
-                </AuthenticatedLayout>
-              </ProtectedRoute>
+              <AuthenticatedLayout>
+                <BuyerDashboard routing="path" path="/test_buyer" />
+              </AuthenticatedLayout>
             }
           />
+          <Route path="/test_seller/*" 
+            element={
+              <AuthenticatedLayout2>
+                <SellerDashboard routing="path" path="/test_buyer" />
+              </AuthenticatedLayout2>
+            }
+          />
+          {/* Protected routes */}
           <Route
             path="/settings"
             element={
