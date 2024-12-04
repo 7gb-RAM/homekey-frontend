@@ -51,15 +51,39 @@ function App() {
     <ThemeProvider>
       <Router>
         <Routes>
-          {/* Authentication Routes */}
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
-          <Route path="/test_buyer/*" element={<BuyerDashboard routing="path" path="/test_buyer" />} />
-          <Route path="/test_seller/*" element={<SellerDashboard routing="path" path="/test_seller" />} />
-          <Route path="/test_fsh/*" element={<FshDashboard routing="path" path="/test_fsh" />} />
+          <Route
+            path="/buyer_dashboard/*"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout />
+              </ProtectedRoute>
+            }>
+            <Route index element={<BuyerDashboard />} />
+          </Route>
 
-          {/* Protected routes */}
+          <Route
+            path="/seller_dashboard/*"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout />
+              </ProtectedRoute>
+            }>
+            <Route index element={<SellerDashboard />} />
+          </Route>
+
+          <Route
+            path="/fsh_dashboard/*"
+            element={
+              <ProtectedRoute>
+                <AuthenticatedLayout />
+              </ProtectedRoute>
+            }>
+            <Route index element={<FshDashboard />} />
+          </Route>
+
           <Route
             path="/"
             element={
@@ -69,10 +93,8 @@ function App() {
             }
           >
             <Route index element={<SellerDashboard />} />
-            {/* LISTINGS */}
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
-
             <Route path="/settings" element={<Listings />} />
           </Route>
         </Routes>

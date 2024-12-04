@@ -9,6 +9,7 @@ import PropertyCardBuyer from '../../components/dashboard/PropertyCardBuyer';
 import property1Image from '../../assets/property1.png';
 import property2Image from '../../assets/property2.png';
 import FshSidebar from '../../components/layout/FshSidebar';
+import TopBar from '../../components/layout/TopBar';
 
 const FshDashboard = () => {
     const [properties, setProperties] = useState([
@@ -85,7 +86,6 @@ const FshDashboard = () => {
 
   return (
     <div className="flex">
-      <FshSidebar></FshSidebar>
       <div className="p-8 bg-white dark:bg-gray-900 min-h-screen flex-1">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">FSH Dashboard</h1>
