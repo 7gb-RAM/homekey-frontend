@@ -48,7 +48,14 @@ const AuthenticatedLayout = () => {
   };
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {renderSidebar()}
+      {/* This is where we decide whether to use the buyer or seller sidebar */}
+      {localStorage.getItem("role") === "Seller" ? (
+        <SellerSidebar />
+      ) : localStorage.getItem("role") === "Buyer" ? (
+        <BuyerSidebar />
+      ) : (
+        <FshSidebar />
+      )}
       <div className="flex-1">
         <TopBar />
         <main>
@@ -66,35 +73,6 @@ function App() {
         <Routes>
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
-
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <AuthenticatedLayout />
-              </ProtectedRoute>
-            }>
-            <Route path="/buyer_dashboard" element={<BuyerDashboard />} />
-          </Route>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <AuthenticatedLayout />
-              </ProtectedRoute>
-            }>
-            <Route path="/seller_dashboard" element={<SellerDashboard />} />
-          </Route>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <AuthenticatedLayout />
-              </ProtectedRoute>
-            }>
-            <Route path="/fsh_dashboard" element={<FshDashboard />} />
-          </Route>
-
           <Route
             path="/"
             element={
@@ -103,7 +81,18 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<SellerDashboard />} />
+            <Route
+              index
+              element={
+                localStorage.getItem("role") === "Seller" ? (
+                  <SellerDashboard />
+                ) : localStorage.getItem("role") === "Buyer" ? (
+                  <BuyerDashboard />
+                ) : (
+                  <FshDashboard />
+                )
+              }
+            />
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
             <Route path="/settings" element={<Settings />} />

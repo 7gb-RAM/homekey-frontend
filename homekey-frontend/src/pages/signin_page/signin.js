@@ -8,7 +8,8 @@ export default function SignIn() {
   const navigate = useNavigate();
   useEffect(()=>{
     if(localStorage.getItem("user_id")){
-      navigate('/')
+      navigate('/', {replace: true});
+      window.location.reload();
     }
   }, []);
   const onSubmit = async (e) => {

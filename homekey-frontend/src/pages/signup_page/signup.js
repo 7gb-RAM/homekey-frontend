@@ -3,7 +3,16 @@ import { Card } from "react-bootstrap";
 import { SignUpForm } from "./signup_form";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUp() {  
+export default function SignUp() {
+
+  const navigate = useNavigate();
+  
+  useEffect(()=>{
+    if(localStorage.getItem("user_id")){
+      navigate('/', {replace: true});
+      window.location.reload();
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 p-4">

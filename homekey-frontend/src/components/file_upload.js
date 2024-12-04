@@ -7,6 +7,7 @@ export function FileUpload() {
   // Handle the file input change (whether via button or drag-and-drop)
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
+    console.log(uploadedFile);
     setFile(uploadedFile);
   };
 
@@ -41,13 +42,13 @@ export function FileUpload() {
           <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
           <div className="mt-4 flex text-sm/6 text-gray-600">
             <label
-              htmlFor="file-upload"
+              htmlFor="document"
               className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
             >
               <span>Upload a file</span>
               <input
-                id="file-upload"
-                name="file-upload"
+                id="document"
+                name="document"
                 type="file"
                 className="sr-only"
                 onChange={handleFileChange}

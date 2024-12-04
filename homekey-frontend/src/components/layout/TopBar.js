@@ -23,7 +23,7 @@ const TopBar = () => {
 
   const handleLogout = async () => {
     localStorage.clear();
-    navigate('/sign-in');
+    navigate('/sign-in', {replace: true});
   };
 
   return (
