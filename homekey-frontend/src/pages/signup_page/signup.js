@@ -3,27 +3,7 @@ import { Card } from "react-bootstrap";
 import { SignUpForm } from "./signup_form";
 import { useNavigate } from "react-router-dom";
 
-export default function SignUp() {
-
-  const navigate = useNavigate();
-  
-  useEffect(()=>{
-    if(localStorage.getItem("user_id")){
-      switch (localStorage.getItem("role")) {
-        case "FSH":
-          navigate("/fsh_dashboard");
-          break;
-        case "Seller":
-          navigate("/seller_dashboard");
-          break;
-        case "Buyer":
-          navigate("/buyer_dashboard");
-          break;
-        default:
-          navigate("/");
-      }
-    }
-  }, []);
+export default function SignUp() {  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50 p-4">

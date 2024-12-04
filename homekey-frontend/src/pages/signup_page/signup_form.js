@@ -8,7 +8,7 @@ import Loader from "../../components/loader";
 
 export function SignUpForm() {
   const [isLoading, setLoading] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   // Form state
   const [formData, setFormData] = useState({
     firstName: "",
@@ -76,31 +76,48 @@ export function SignUpForm() {
       };
 
       try {
+        
         setLoading(true);
+        console.log("payload", payload);
+        const response = await fetch("http://localhost:5001/auth/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        setLoading(false);
+        const data = await response.json();
+        localStorage.setItem("role", data.role);
+        console.log(data);
+
         sleep(1000).then(async () => {
-          const response = await fetch("http://localhost:5001/auth/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
-          setLoading(false);
-          const data = await response.json();
-          console.log(data);
-          
           if (response.ok) {
             toast.success("User registered successfully");
             localStorage.setItem("user_id", data.user_id);
-            localStorage.setItem("role", data.role);
-
-            navigator("/");
+            console.log("role in local storage: ", localStorage.role);
+            switch (localStorage.role) {
+              
+              case "FSH":
+                navigate("/fsh_dashboard");
+                break;
+              case "Seller":
+                navigate("/seller_dashboard");
+                break;
+              case "Buyer":
+                navigate("/buyer_dashboard");
+                break;
+              default:
+                navigate("/"); // Fallback route
+            }
           } else {
             // Handle errors (e.g., email already exists)
             toast .error(data.error || "An error occurred");
             // setErrors({ apiError: data.error || 'An error occurred' });
           }
         });
+        
+        
       } catch (error) {
         setLoading(false);
         console.error("Error:", error);
