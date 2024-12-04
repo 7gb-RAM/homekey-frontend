@@ -39,19 +39,8 @@ export default function SignIn() {
         toast.success("User login successfully");
         localStorage.setItem("user_id", data.user_id);
         localStorage.setItem("role", data.role);
-        switch (localStorage.getItem("role")) {
-          case "FSH":
-            navigate("/fsh_dashboard");
-            break;
-          case "Seller":
-            navigate("/seller_dashboard");
-            break;
-          case "Buyer":
-            navigate("/buyer_dashboard");
-            break;
-          default:
-            break;
-        }
+        navigate('/', {replace: true});
+        window.location.reload();
       }
     })
     setLoading(false);

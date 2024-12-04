@@ -90,19 +90,8 @@ export function SignUpForm() {
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("role", data.role);
           console.log("role in local storage: ", localStorage.getItem("role"));
-          switch (localStorage.getItem("role")) {
-            case "FSH":
-              navigate("/fsh_dashboard");
-              break;
-            case "Seller":
-              navigate("/seller_dashboard");
-              break;
-            case "Buyer":
-              navigate("/buyer_dashboard");
-              break;
-            default:
-              break;
-          }
+          navigate('/', {replace: true});
+          window.location.reload();
         }
       })
       setLoading(false);
