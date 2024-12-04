@@ -3,7 +3,6 @@ import StatCard from '../../components/dashboard/StatCard';
 import TaskBoard from '../../components/dashboard/TaskBoard';
 import DocumentList from '../../components/dashboard/DocumentList';
 import { HomeIcon, ClockIcon, CurrencyDollarIcon, DocumentIcon } from '@heroicons/react/24/outline';
-import SellerSidebar from '../../components/layout/SellerSidebar';
 import PropertyCardSeller from '../../components/dashboard/PropertyCardSeller';
 
 const SellerDashboard = () => {

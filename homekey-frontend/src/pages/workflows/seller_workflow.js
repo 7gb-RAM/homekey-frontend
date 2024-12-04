@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { FileUpload } from "../../components/file_upload";
 import { StepsHeader } from "../../components/steps_header";
@@ -47,7 +45,6 @@ export default function SellerWorkflow({ initialStep = 1, initialOption = 0 }) {
   const step = steps.find((step) => step.id === currentStep);
   const onSubmit = (event)=>{
     event.preventDefault();
-    console.log(event.target);
   }
   
   return (
@@ -83,7 +80,6 @@ export default function SellerWorkflow({ initialStep = 1, initialOption = 0 }) {
         />
         <form onSubmit={onSubmit}>
           {["data"].map((e) => {
-            console.log(step.options[currentOption]);
             if (step.options[currentOption].index === 0) {
               return (
                 <div>

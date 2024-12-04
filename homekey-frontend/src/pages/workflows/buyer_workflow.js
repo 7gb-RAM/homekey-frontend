@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Steps } from "../../components/steps";
 import { StepsHeader } from "../../components/steps_header";
@@ -102,7 +100,6 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
 
   const step = steps.find((step) => step.id === currentStep);
 
-  // Function to update the checked status of an option
   const updateOptionCheckedStatus = (stepId, optionIndex, checked) => {
     setSteps((prevSteps) =>
       prevSteps.map((s) => {
@@ -130,7 +127,7 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
       setMobileFiltersOpen={setMobileFiltersOpen}
       isDisclosureDisabled={isDisclosureDisabled}
       currentStep={currentStep}
-      updateOptionCheckedStatus={updateOptionCheckedStatus} // Pass the function to Steps
+      updateOptionCheckedStatus={updateOptionCheckedStatus}
     >
       <div className="mt-4">
         <StepsHeader
@@ -138,11 +135,8 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
           progress={((currentOption + 1) / step.options.length) * 100}
           nextTitle={currentOption < step.options.length - 1 ? "Next" : "Save"}
           onClickNext={() => {
-            // Mark the current option as checked
             updateOptionCheckedStatus(currentStep, currentOption, true);
-
             if (currentOption < step.options.length - 1) {
-              // Move to the next option
               setCurrentOption(currentOption + 1);
             } else {
               alert("All steps in this section are completed.");
@@ -150,9 +144,7 @@ export default function BuyerWorkflow({ initialStep = 1, initialOption = 0 }) {
           }}
           onClickPrev={() => {
             if (currentOption > 0) {
-              // Uncheck the previous option
               updateOptionCheckedStatus(currentStep, currentOption - 1, false);
-              // Move to the previous option
               setCurrentOption(currentOption - 1);
             } else {
               alert("This is the first step.");

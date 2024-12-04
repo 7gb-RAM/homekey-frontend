@@ -31,7 +31,6 @@ export default function SignIn() {
     }).then(response=>{
       return response.json()
     }).then(data=>{
-      console.log(data);
       if (data.error) {
         toast.error(data.error);
         return;
@@ -40,7 +39,6 @@ export default function SignIn() {
         localStorage.setItem("user_id", data.user_id);
         localStorage.setItem("role", data.role);
         navigate('/', {replace: true});
-        window.location.reload();
       }
     })
     setLoading(false);

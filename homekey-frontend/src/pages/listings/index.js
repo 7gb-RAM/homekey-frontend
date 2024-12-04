@@ -39,7 +39,6 @@ export function Listings() {
     axios
       .get(`http://localhost:5001/listings/get_my_listings?user_id=${localStorage.getItem("user_id")}`)
       .then((response) => {
-        console.log(response);
         const listings = [];
         response.data.map((listing) => {
           listings.push(listing);

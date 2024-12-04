@@ -138,7 +138,7 @@ export default function FshWorkflow({ initialStep = 1, initialOption = 0 }) {
           setMobileFiltersOpen={setMobileFiltersOpen}
           isDisclosureDisabled={isDisclosureDisabled}
           currentStep={currentStep}
-          updateOptionCheckedStatus={updateOptionCheckedStatus} // Pass the function to Steps
+          updateOptionCheckedStatus={updateOptionCheckedStatus}
         >
           <div className="mt-4">
             <StepsHeader
@@ -146,14 +146,11 @@ export default function FshWorkflow({ initialStep = 1, initialOption = 0 }) {
               progress={((currentOption + 1) / step.options.length) * 100}
               nextTitle={currentOption < step.options.length - 1 ? "Next" : "Save"}
               onClickNext={() => {
-                // Mark the current option as checked
                 updateOptionCheckedStatus(currentStep, currentOption, true);
     
                 if (currentOption < step.options.length - 1) {
-                  // Move to the next option
                   setCurrentOption(currentOption + 1);
                 } else {
-                  // Optionally, move to the next step or handle completion
                   if (currentStep < steps.length) {
                     setCurrentStep(currentStep + 1);
                     setCurrentOption(0);
@@ -164,16 +161,12 @@ export default function FshWorkflow({ initialStep = 1, initialOption = 0 }) {
               }}
               onClickPrev={() => {
                 if (currentOption > 0) {
-                  // Uncheck the previous option
                   updateOptionCheckedStatus(currentStep, currentOption - 1, false);
-                  // Move to the previous option
                   setCurrentOption(currentOption - 1);
                 } else if (currentStep > 1) {
-                  // Move to the last option of the previous step
                   const previousStep = steps.find((s) => s.id === currentStep - 1);
                   setCurrentStep(currentStep - 1);
                   setCurrentOption(previousStep.options.length - 1);
-                  // Optionally, uncheck the last option of the previous step
                   updateOptionCheckedStatus(currentStep - 1, previousStep.options.length - 1, false);
                 } else {
                   alert("This is the first step.");

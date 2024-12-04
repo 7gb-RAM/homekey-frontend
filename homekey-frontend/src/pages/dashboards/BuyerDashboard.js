@@ -74,7 +74,6 @@ const BuyerDashboard = () => {
   ];
 
   const handleSaveProperty = (propertyId) => {
-    // Toggle the saved state of the property
     setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === propertyId ? { ...property, saved: !property.saved } : property
@@ -87,17 +86,14 @@ const BuyerDashboard = () => {
       <div className="flex-1 p-8 bg-white dark:bg-gray-900 min-h-screen">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Buyer Dashboard</h1>
-          {/* Additional header actions can go here */}
         </div>
 
-        {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
             <StatCard key={index} {...stat} />
           ))}
         </div>
 
-        {/* Recommended Properties Section */}
         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           Recommended Properties
         </h2>
@@ -111,7 +107,6 @@ const BuyerDashboard = () => {
           ))}
         </div>
 
-        {/* Tasks Section */}
         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Tasks and Documents</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <TaskBoard tasks={tasks} />

@@ -1,5 +1,3 @@
-// src/pages/dashboards/FshDashboard.js
-
 import React, { useState } from 'react';
 import StatCard from '../../components/dashboard/StatCard';
 import TaskBoard from '../../components/dashboard/TaskBoard';
@@ -82,7 +80,6 @@ const FshDashboard = () => {
   ];
 
   const handleSaveProperty = (propertyId) => {
-    // Toggle the saved state of the property
     setProperties((prevProperties) =>
       prevProperties.map((property) =>
         property.id === propertyId ? { ...property, saved: !property.saved } : property

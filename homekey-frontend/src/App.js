@@ -1,7 +1,7 @@
 import SignIn from "./pages/signin_page/signin";
 import SignUp from "./pages/signup_page/signup";
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";
 import BuyerDashboard from "./pages/dashboards/BuyerDashboard";
@@ -14,7 +14,6 @@ import { CreateListing } from "./pages/listings/create";
 import "react-toastify/dist/ReactToastify.css";
 import FshDashboard from "./pages/dashboards/FshDashboard";
 import FshSidebar from "./components/layout/FshSidebar";
-
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -30,25 +29,8 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AuthenticatedLayout = () => {
-  const navigate = useNavigate();
-  
-  const renderSidebar = () => {
-    const currRole = localStorage.getItem("role");
-    if (currRole === null) navigate('/sign-in');
-    switch (currRole) {
-      case "Seller":
-        return <SellerSidebar />;
-      case "Buyer":
-        return <BuyerSidebar />;
-      case "FSH":
-        return <FshSidebar />;
-      default:
-        return null;
-    }
-  };
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* This is where we decide whether to use the buyer or seller sidebar */}
       {localStorage.getItem("role") === "Seller" ? (
         <SellerSidebar />
       ) : localStorage.getItem("role") === "Buyer" ? (

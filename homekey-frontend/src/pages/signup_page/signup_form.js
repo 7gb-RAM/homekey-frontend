@@ -81,7 +81,6 @@ export function SignUpForm() {
       }).then(response=>{
         return response.json()
       }).then(data=>{
-        console.log(data);
         if (data.error) {
           toast.error(data.error);
           return;
@@ -89,16 +88,13 @@ export function SignUpForm() {
           toast.success("User registered successfully");
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("role", data.role);
-          console.log("role in local storage: ", localStorage.getItem("role"));
           navigate('/', {replace: true});
-          window.location.reload();
         }
       })
       setLoading(false);
     }
   };
 
-  // Role selection handler
   const selectRole = (role) => {
     setSelectedRole(role);
   };
