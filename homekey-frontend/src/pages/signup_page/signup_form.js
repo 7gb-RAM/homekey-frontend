@@ -95,6 +95,7 @@ export function SignUpForm() {
             localStorage.setItem("role", data.role);
 
             navigator("/");
+            window.location.reload();
           } else {
             // Handle errors (e.g., email already exists)
             toast .error(data.error || "An error occurred");

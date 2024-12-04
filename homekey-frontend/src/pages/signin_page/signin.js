@@ -10,7 +10,8 @@ export default function SignIn() {
   const [errors, setErrors] = useState({});
   useEffect(()=>{
     if(localStorage.getItem("user_id")){
-      navigate('/')
+      navigate('/', {replace: true});
+      window.location.reload();
     }
   }, []);
   const onSubmit = async (e) => {
@@ -41,19 +42,8 @@ export default function SignIn() {
           toast.success("User login successfully");
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("role", data.role);
-          switch (data.role) {
-            case "FSH":
-              navigate("/fsh_dashboard");
-              break;
-            case "Seller":
-              navigate("/seller_dashboard");
-              break;
-            case "Buyer":
-              navigate("/buyer_dashboard");
-              break;
-            default:
-              navigate("/"); // Fallback route
-          }
+          navigate('/', {replace: true});
+          window.location.reload();
         } else {
           // Handle errors (e.g., email already exists)
           toast .error(data.error || "An error occurred");
