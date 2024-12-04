@@ -9,7 +9,19 @@ export default function SignUp() {
   
   useEffect(()=>{
     if(localStorage.getItem("user_id")){
-      navigate('/')
+      switch (localStorage.getItem("role")) {
+        case "FSH":
+          navigate("/fsh_dashboard");
+          break;
+        case "Seller":
+          navigate("/seller_dashboard");
+          break;
+        case "Buyer":
+          navigate("/buyer_dashboard");
+          break;
+        default:
+          navigate("/");
+      }
     }
   }, []);
 
