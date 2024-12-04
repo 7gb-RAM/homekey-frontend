@@ -1,6 +1,6 @@
 import SignIn from "./pages/signin_page/signin";
 import SignUp from "./pages/signup_page/signup";
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";
@@ -11,15 +11,16 @@ import { Listings } from "./pages/listings";
 import SellerSidebar from "./components/layout/SellerSidebar";
 import TopBar from "./components/layout/TopBar";
 import { CreateListing } from "./pages/listings/create";
-import "react-toastify/dist/ReactToastify.css"; // Import CSS for styling
+import "react-toastify/dist/ReactToastify.css";
 import FshDashboard from "./pages/dashboards/FshDashboard";
+import { AuthContext } from "./context/AuthContext";
+import FshSidebar from "./components/layout/FshSidebar";
 
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-// Protected route wrapper
 const ProtectedRoute = ({ children }) => {
   const user_id = localStorage.getItem("user_id");
 
@@ -29,13 +30,24 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Layout wrapper for authenticated pages
 const AuthenticatedLayout = () => {
+  const { user } = useContext(AuthContext);
+  console.log("user role: ", user.role);
+  const renderSidebar = () => {
+    switch (user.role) {
+      case "Seller":
+        return <SellerSidebar />;
+      case "Buyer":
+        return <BuyerSidebar />;
+      case "FSH":
+        return <FshSidebar />;
+      default:
+        return null;
+    }
+  };
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      {/* This is where we decide whether to use the buyer or seller sidebar */}
-      {/* <BuyerSidebar /> */}
-      <SellerSidebar />
+      {renderSidebar()}
       <div className="flex-1">
         <TopBar />
         <main>
@@ -80,7 +92,7 @@ function App() {
               <ProtectedRoute>
                 <AuthenticatedLayout />
               </ProtectedRoute>
-            }>
+          }>
             <Route index element={<FshDashboard />} />
           </Route>
 
@@ -95,7 +107,7 @@ function App() {
             <Route index element={<SellerDashboard />} />
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
-            <Route path="/settings" element={<Listings />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Routes>
       </Router>

@@ -9,6 +9,7 @@ import {
   ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 import { useTheme } from '../../context/ThemeContext';
+import pfp from '../../assets/profile.png'
 
 const TopBar = () => {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -59,7 +60,7 @@ const TopBar = () => {
             className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <img
-              src={"logo"}
+              src={pfp}
               alt={'User'}
               className="h-8 w-8 rounded-full bg-gray-200 dark:bg-gray-600"
             />

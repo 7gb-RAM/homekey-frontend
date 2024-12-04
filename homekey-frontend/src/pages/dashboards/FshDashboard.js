@@ -8,8 +8,7 @@ import { ClipboardDocumentListIcon, UserGroupIcon, Cog6ToothIcon, ClipboardIcon 
 import PropertyCardBuyer from '../../components/dashboard/PropertyCardBuyer';
 import property1Image from '../../assets/property1.png';
 import property2Image from '../../assets/property2.png';
-import FshSidebar from '../../components/layout/FshSidebar';
-import TopBar from '../../components/layout/TopBar';
+import property3Image from '../../assets/property3.png';
 
 const FshDashboard = () => {
     const [properties, setProperties] = useState([
@@ -21,7 +20,6 @@ const FshDashboard = () => {
           bedrooms: 3,
           bathrooms: 2,
           squareFootage: 1800,
-          saved: true,
         },
         {
           id: 2,
@@ -31,7 +29,15 @@ const FshDashboard = () => {
           bedrooms: 4,
           bathrooms: 3,
           squareFootage: 2200,
-          saved: false,
+        },
+        {
+          id: 3,
+          coverImage: property3Image,
+          address: '789 W 3rd Ave, Los Angeles, USA',
+          price: 750000,
+          bedrooms: 4,
+          bathrooms: 3,
+          squareFootage: 2000,
         },
       ]);
   const stats = [
@@ -112,7 +118,7 @@ const FshDashboard = () => {
         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
           Listed Properties
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {properties.map((property) => (
             <PropertyCardBuyer
               key={property.id}
