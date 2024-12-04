@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { SignInForm } from "./signin_form";
 import { sleep } from "../../App";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   useEffect(()=>{
     if(localStorage.getItem("user_id")){
       navigate('/')
@@ -17,24 +17,43 @@ export default function SignIn() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const payload = {
+      email: email,
+      password: password,
+    };
     setLoading(true);
 
-    sleep(1000).then(() => {
-      axios
-        .post("http://localhost:5001/auth/login", { email, password }, {headers: {
-          "Content-Type": "application/json",
-        },})
-        .then((response) => {
-          console.log(response);
-          localStorage.setItem("user_id", response.data.user_id)
-          localStorage.setItem("role", response.data.role)
-          navigate('/');
-          setLoading(false);
-        })
-        .catch((error) => {
-          setLoading(false);
+    try {
+      setLoading(true);
+      sleep(1000).then(async () => {
+        const response = await fetch("http://localhost:5001/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         });
-    });
+        setLoading(false);
+        const data = await response.json();
+        console.log(data);
+        
+        if (response.ok) {
+          toast.success("User login successfully");
+          localStorage.setItem("user_id", data.user_id);
+          localStorage.setItem("role", data.role);
+
+          navigate("/");
+        } else {
+          // Handle errors (e.g., email already exists)
+          toast .error(data.error || "An error occurred");
+          // setErrors({ apiError: data.error || 'An error occurred' });
+        }
+      });
+    } catch (error) {
+      setLoading(false);
+      console.error("Error:", error);
+      setErrors({ apiError: "Server error. Please try again later." });
+    }
   };
 
   return (
