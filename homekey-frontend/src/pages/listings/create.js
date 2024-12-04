@@ -3,16 +3,221 @@ import { FileUpload } from "../../components/file_upload";
 import { SecondaryBtn } from "../../components/secondary_btn";
 import SellerWorkflow from "../workflows/seller_workflow";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../../components/loader";
 import { toast } from "react-toastify";
 import { sleep } from "../../App";
+import FileInput from "../../components/file_input";
 
 export function CreateListing() {
   const [isLoading, setLoading] = useState(false);
+  /*
+    Status: 
+      1. to_be_initiated
+      2. success
+      3. error
+      4. loading
+    Steps: 
+      1. to_be_initiated
+      2. notify_fsh
+      3. prepare_home
+      4. upload_photo
+      5. create_listing
+  */
+  const [formSubmitStep, setFormSubmitStep] = useState({ step: "to_be_initiated", stauts: "to_be_initiated" });
+  const [submittedFormData, setSubmittedFormData] = useState();
+
+  // listings/notify_fsh
+  // listings/prepare_home
+  // listings/upload_photo
+  // listings/create_listing
+
+  // const callNotifyFsh = (data) => {
+  //   const formData = new FormData();
+  //   formData.append("document", data.document);
+  //   formData.append("user_id", data.user_id);
+  //   setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "loading" }));
+  //   axios
+  //     .post("http://localhost:5001/listings/notify_fsh", formData, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "success" }));
+  //     })
+  //     .catch((error) => {
+  //       setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "error" }));
+  //     });
+  // };
+
+  // const callPrepareHome = () => {
+  //   setFormSubmitStep((prev) => ({ step: "prepare_home", status: "loading" }));
+  //   axios
+  //     .post("http://localhost:5001/listings/prepare_home", {user_id: localStorage.getItem('user_id')}, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setFormSubmitStep((prev) => ({ step: "prepare_home", status: "success" }));
+  //     })
+  //     .catch((error) => {
+  //       setFormSubmitStep((prev) => ({ step: "prepare_home", status: "error" }));
+  //     });
+  // };
+
+  // const callUploadPhoto = (data) => {
+  //   setFormSubmitStep((prev) => ({ step: "upload_photo", status: "loading" }));
+  //   axios
+  //     .post("http://localhost:5001/listings/upload_photo", data, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     })
+  //     .then((response) => {
+  //       setFormSubmitStep((prev) => ({ step: "upload_photo", status: "success" }));
+  //     })
+  //     .catch((error) => {
+  //       setFormSubmitStep((prev) => ({ step: "upload_photo", status: "error" }));
+  //     });
+  // };
+
+  // const callCreateApi = (data) => {
+  //   setLoading(true);
+  //   sleep(1000).then(() => {
+  //     axios
+  //       .post("http://localhost:5001/listings/create_listing", data, {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //       .then((response) => {
+  //         console.log(response);
+  //         navigate("/listings");
+  //         toast.success("Successfully created listing");
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         let errorMsg = "Something went wrong";
+  //         if (error["response"]["data"]["error"]) {
+  //           errorMsg = error["response"]["data"]["error"];
+  //         }
+  //         toast.error(errorMsg);
+
+  //         setLoading(false);
+  //       });
+  //   });
+  // };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    const formElements = event.target.elements;
+    const formValues = {};
+
+    for (let element of formElements) {
+      if (element.name === "photo" || element.name === "document") {
+        formValues[element.name] = element.files[0];
+      } else {
+        console.log({ name: element.name, val: element.value });
+        formValues[element.name] = element.value;
+      }
+    }
+    console.log(formValues);
+    setSubmittedFormData((p) => formValues);
+    // callNotifyFsh({ document: formValues.document, user_id: localStorage.getItem("user_id") });
+    // callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
+  };
+  const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (formSubmitStep.stauts === "success") {
+  //     if (formSubmitStep.step === "notify_fsh") {
+  //       callPrepareHome();
+  //     } else if (formSubmitStep.step === "prepare_home") {
+  //       callUploadPhoto({photo: submittedFormData.photo, user_id: localStorage.getItem("user_id")});
+  //     } else if (formSubmitStep.step === "upload_photo") {
+  //       callCreateApi(submittedFormData)
+  //     } else if (formSubmitStep.step === "create_listing") {
+  //       toast.success("Successfully created a listing")
+  //       navigate('/listings')
+  //     }
+  //     return;
+  //   }
+
+  //   if (formSubmitStep.step === "error") {
+  //     if (formSubmitStep.step === "notify_fsh") {
+  //     } else if (formSubmitStep.step === "prepare_home") {
+  //     } else if (formSubmitStep.step === "upload_photo") {
+  //     } else if (formSubmitStep.step === "create_listing") {
+
+  //     }
+  //     return;
+  //   }
+  // }, [formSubmitStep]);
+  const callNotifyFsh = (data) => {
+    const formData = new FormData();
+    formData.append("document", data.document);
+    formData.append("user_id", data.user_id);
+
+    setFormSubmitStep({ step: "notify_fsh", status: "loading" });
+
+    axios
+      .post("http://localhost:5001/listings/notify_fsh", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setFormSubmitStep({ step: "notify_fsh", status: "success" });
+      })
+      .catch((error) => {
+        setFormSubmitStep({ step: "notify_fsh", status: "error" });
+      });
+  };
+
+  const callPrepareHome = () => {
+    setFormSubmitStep({ step: "prepare_home", status: "loading" });
+
+    axios
+      .post(
+        "http://localhost:5001/listings/prepare_home",
+        {
+          user_id: localStorage.getItem("user_id"),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        setFormSubmitStep({ step: "prepare_home", status: "success" });
+      })
+      .catch((error) => {
+        setFormSubmitStep({ step: "prepare_home", status: "error" });
+      });
+  };
+
+  const callUploadPhoto = (data) => {
+    setFormSubmitStep({ step: "upload_photo", status: "loading" });
+
+    axios
+      .post("http://localhost:5001/listings/upload_photo", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setFormSubmitStep({ step: "upload_photo", status: "success" });
+      })
+      .catch((error) => {
+        setFormSubmitStep({ step: "upload_photo", status: "error" });
+      });
+  };
+
   const callCreateApi = (data) => {
     setLoading(true);
-
     sleep(1000).then(() => {
       axios
         .post("http://localhost:5001/listings/create_listing", data, {
@@ -21,37 +226,49 @@ export function CreateListing() {
           },
         })
         .then((response) => {
-          console.log(response);
           navigate("/listings");
-          toast.success("Successfully created listing")
+          toast.success("Successfully created listing");
           setLoading(false);
         })
         .catch((error) => {
-          let errorMsg = "Something went wrong"
-          if(error['response']['data']['error']){
-            errorMsg =  error['response']['data']['error'];
+          let errorMsg = "Something went wrong";
+          if (error["response"]["data"]["error"]) {
+            errorMsg = error["response"]["data"]["error"];
           }
-          toast.error(errorMsg)
-          
+          toast.error(errorMsg);
           setLoading(false);
         });
     });
   };
-  const onSubmit = async (event) => {
-    event.preventDefault();
 
-    const formElements = event.target.elements;
-    const formValues = {};
+  useEffect(() => {
+    const { status, step } = formSubmitStep;
 
-    for (let element of formElements) {
-      if (element.name) {
-        formValues[element.name] = element.value;
+    if (status === "success") {
+      switch (step) {
+        case "notify_fsh":
+          callPrepareHome(submittedFormData)
+          break;
+        case "prepare_home":
+          toast.success("Successfully created a listing");
+          navigate("/listings");
+          // callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
+          break;
+        case "upload_photo":
+          callNotifyFsh(submittedFormData);
+          break;
+        case "create_listing":
+          callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
+          break;
+        default:
+          break;
       }
     }
-    console.log(formValues);
-    callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
-  };
-  const navigate = useNavigate();
+
+    if (status === "error") {
+      toast.error("Error occurred at step: " + step);
+    }
+  }, [formSubmitStep]);
 
   return (
     <div className="p-8">
@@ -59,7 +276,7 @@ export function CreateListing() {
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Add Listing</h1>
           <div className="flex gap-2">
-            <SecondaryBtn title={"Cancel"} onClick={() => navigate('/listings')} />
+            <SecondaryBtn title={"Cancel"} onClick={() => navigate("/listings")} />
             <button
               type="submit"
               disabled={isLoading}
@@ -104,6 +321,7 @@ export function CreateListing() {
         </div>
         {/*  */}
         <div className="text-white">
+          <FileInput />
           <FileUpload />
         </div>
         {/*  */}
