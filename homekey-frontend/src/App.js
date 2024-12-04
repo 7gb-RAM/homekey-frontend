@@ -1,7 +1,7 @@
 import SignIn from "./pages/signin_page/signin";
 import SignUp from "./pages/signup_page/signup";
 import React, { useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";
 import BuyerDashboard from "./pages/dashboards/BuyerDashboard";
@@ -30,11 +30,12 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AuthenticatedLayout = () => {
-  // 根据用户的身份决定生成那种侧边栏
-  // 其他见pages/signup_page/signup_form第90-110行以及pages/signin_page/signin第30-50行
+  const navigate = useNavigate();
   
   const renderSidebar = () => {
-    switch (localStorage.getItem("role")) {
+    const currRole = localStorage.getItem("role");
+    if (currRole === null) navigate('/sign-in');
+    switch (currRole) {
       case "Seller":
         return <SellerSidebar />;
       case "Buyer":

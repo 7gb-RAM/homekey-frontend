@@ -72,21 +72,21 @@ export function SignUpForm() {
         
       setLoading(true);
 
-      await fetch("http://localhost:5001/auth/signin",{
+      await fetch("http://localhost:5001/auth/register",{
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       }).then(response=>{
-        if (!response.ok)
-        {
-          toast.error("Network error");
-        } 
         return response.json()
       }).then(data=>{
         console.log(data);
-        toast.success("User registered successfully");
+        if (data.error) {
+          toast.error(data.error);
+          return;
+        } else {
+          toast.success("User registered successfully");
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("role", data.role);
           console.log("role in local storage: ", localStorage.getItem("role"));
@@ -100,9 +100,8 @@ export function SignUpForm() {
             case "Buyer":
               navigate("/buyer_dashboard");
               break;
-            default:
-              navigate("/"); // Fallback route
           }
+        }
       }).catch(error=>{
         console.error("Error:", error);
         toast.error("Server error");

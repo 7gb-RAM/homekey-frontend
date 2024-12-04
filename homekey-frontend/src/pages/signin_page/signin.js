@@ -29,35 +29,31 @@ export default function SignIn() {
       },
       body: JSON.stringify(payload),
     }).then(response=>{
-      if (!response.ok)
-      {
-        toast.error("Network error");
-      } 
       return response.json()
     }).then(data=>{
       console.log(data);
-      toast.success("User login successfully");
-      localStorage.setItem("user_id", data.user_id);
-      localStorage.setItem("role", data.role);
-      switch (localStorage.getItem("role")) {
-        case "FSH":
-          navigate("/fsh_dashboard");
-          break;
-        case "Seller":
-          navigate("/seller_dashboard");
-          break;
-        case "Buyer":
-          navigate("/buyer_dashboard");
-          break;
-        default:
-          navigate("/");
+      if (data.error) {
+        toast.error(data.error);
+        return;
+      } else {
+        toast.success("User login successfully");
+        localStorage.setItem("user_id", data.user_id);
+        localStorage.setItem("role", data.role);
+        switch (localStorage.getItem("role")) {
+          case "FSH":
+            navigate("/fsh_dashboard");
+            break;
+          case "Seller":
+            navigate("/seller_dashboard");
+            break;
+          case "Buyer":
+            navigate("/buyer_dashboard");
+            break;
+          // default:
+          //   navigate("/");
         }
-      }).catch(error=>{
-        console.error("Error:", error);
-        toast.error("Server error");
-        setErrors({ apiError: "Server error. Please try again later." });
       }
-    )
+    })
     setLoading(false);
   };
 
