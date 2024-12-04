@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { ShoppingCartIcon, StoreIcon, BuildingIcon } from "lucide-react";
-import { sleep } from "../../App";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader";
@@ -9,7 +8,6 @@ import Loader from "../../components/loader";
 export function SignUpForm() {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // Form state
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +19,6 @@ export function SignUpForm() {
   const [selectedRole, setSelectedRole] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Validation function
   const validateForm = () => {
     const newErrors = {};
 
@@ -51,7 +48,6 @@ export function SignUpForm() {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -67,62 +63,52 @@ export function SignUpForm() {
     if (validateForm()) {
       const name = `${formData.firstName} ${formData.lastName}`;
 
-      // Create the payload
       const payload = {
         name: name,
         email: formData.email,
         password: formData.password,
         role: selectedRole,
       };
-
-      try {
         
-        setLoading(true);
-        console.log("payload", payload);
-        const response = await fetch("http://localhost:5001/auth/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-        setLoading(false);
-        const data = await response.json();
-        localStorage.setItem("role", data.role);
+      setLoading(true);
+
+      await fetch("http://localhost:5001/auth/signin",{
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      }).then(response=>{
+        if (!response.ok)
+        {
+          toast.error("Network error");
+        } 
+        return response.json()
+      }).then(data=>{
         console.log(data);
-
-        sleep(1000).then(async () => {
-          if (response.ok) {
-            toast.success("User registered successfully");
-            localStorage.setItem("user_id", data.user_id);
-            console.log("role in local storage: ", localStorage.role);
-            switch (localStorage.role) {
-              
-              case "FSH":
-                navigate("/fsh_dashboard");
-                break;
-              case "Seller":
-                navigate("/seller_dashboard");
-                break;
-              case "Buyer":
-                navigate("/buyer_dashboard");
-                break;
-              default:
-                navigate("/"); // Fallback route
-            }
-          } else {
-            // Handle errors (e.g., email already exists)
-            toast .error(data.error || "An error occurred");
-            // setErrors({ apiError: data.error || 'An error occurred' });
+        toast.success("User registered successfully");
+          localStorage.setItem("user_id", data.user_id);
+          localStorage.setItem("role", data.role);
+          console.log("role in local storage: ", localStorage.getItem("role"));
+          switch (localStorage.getItem("role")) {
+            case "FSH":
+              navigate("/fsh_dashboard");
+              break;
+            case "Seller":
+              navigate("/seller_dashboard");
+              break;
+            case "Buyer":
+              navigate("/buyer_dashboard");
+              break;
+            default:
+              navigate("/"); // Fallback route
           }
-        });
-        
-        
-      } catch (error) {
-        setLoading(false);
+      }).catch(error=>{
         console.error("Error:", error);
+        toast.error("Server error");
         setErrors({ apiError: "Server error. Please try again later." });
-      }
+      })
+      setLoading(false);
     }
   };
 
@@ -133,7 +119,6 @@ export function SignUpForm() {
 
   return (
     <Form onSubmit={handleSubmit} className="space-y-3">
-      {/* First Name and Last Name Fields */}
       <div className="flex space-x-2">
         <Form.Group controlId="firstName" className="w-1/2">
           <Form.Control
@@ -162,7 +147,6 @@ export function SignUpForm() {
         </Form.Group>
       </div>
 
-      {/* Email Field */}
       <Form.Group controlId="email">
         <Form.Control
           type="email"
@@ -176,7 +160,6 @@ export function SignUpForm() {
         {errors.email && <div className="text-red-500 text-sm mt-1">{errors.email}</div>}
       </Form.Group>
 
-      {/* Password Field */}
       <Form.Group controlId="password">
         <Form.Control
           type="password"
@@ -190,7 +173,6 @@ export function SignUpForm() {
         {errors.password && <div className="text-red-500 text-sm mt-1">{errors.password}</div>}
       </Form.Group>
 
-      {/* Confirm Password Field */}
       <Form.Group controlId="confirmPassword">
         <Form.Control
           type="password"
@@ -204,10 +186,8 @@ export function SignUpForm() {
         {errors.confirmPassword && <div className="text-red-500 text-sm mt-1">{errors.confirmPassword}</div>}
       </Form.Group>
 
-      {/* Prompt */}
       <p className="text-blue-600 text-center">Please select your role from the options below:</p>
 
-      {/* Role Selection */}
       <Form.Group>
         {errors.role && <div className="text-red-500 text-sm text-center mb-2">{errors.role}</div>}
         {errors.apiError && <div className="text-red-500 text-sm text-center mb-2">{errors.apiError}</div>}
@@ -253,12 +233,10 @@ export function SignUpForm() {
         </div>
       </Form.Group>
 
-      {/* Submit Button */}
       <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
         {isLoading ?  <Loader/> :"Create Account"}
       </Button>
 
-      {/* Sign In Link */}
       <p className="text-center text-sm text-gray-500">
         Already have an account?{" "}
         <a href="./sign-in" className="text-blue-600 hover:underline">

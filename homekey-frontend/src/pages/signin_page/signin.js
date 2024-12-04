@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { SignInForm } from "./signin_form";
-import { sleep } from "../../App";
 import { toast } from "react-toastify";import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
@@ -23,47 +22,43 @@ export default function SignIn() {
     };
     setLoading(true);
 
-    try {
-      setLoading(true);
-      sleep(1000).then(async () => {
-        const response = await fetch("http://localhost:5001/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        });
-        setLoading(false);
-        const data = await response.json();
-        
-        if (response.ok) {
-          toast.success("User login successfully");
-          localStorage.setItem("user_id", data.user_id);
-          localStorage.setItem("role", data.role);
-          switch (data.role) {
-            case "FSH":
-              navigate("/fsh_dashboard");
-              break;
-            case "Seller":
-              navigate("/seller_dashboard");
-              break;
-            case "Buyer":
-              navigate("/buyer_dashboard");
-              break;
-            default:
-              navigate("/"); // Fallback route
-          }
-        } else {
-          // Handle errors (e.g., email already exists)
-          toast .error(data.error || "An error occurred");
-          // setErrors({ apiError: data.error || 'An error occurred' });
+    await fetch("http://localhost:5001/auth/login",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }).then(response=>{
+      if (!response.ok)
+      {
+        toast.error("Network error");
+      } 
+      return response.json()
+    }).then(data=>{
+      console.log(data);
+      toast.success("User login successfully");
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("role", data.role);
+      switch (localStorage.getItem("role")) {
+        case "FSH":
+          navigate("/fsh_dashboard");
+          break;
+        case "Seller":
+          navigate("/seller_dashboard");
+          break;
+        case "Buyer":
+          navigate("/buyer_dashboard");
+          break;
+        default:
+          navigate("/");
         }
-      });
-    } catch (error) {
-      setLoading(false);
-      console.error("Error:", error);
-      setErrors({ apiError: "Server error. Please try again later." });
-    }
+      }).catch(error=>{
+        console.error("Error:", error);
+        toast.error("Server error");
+        setErrors({ apiError: "Server error. Please try again later." });
+      }
+    )
+    setLoading(false);
   };
 
   return (

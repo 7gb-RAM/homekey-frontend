@@ -13,7 +13,6 @@ import TopBar from "./components/layout/TopBar";
 import { CreateListing } from "./pages/listings/create";
 import "react-toastify/dist/ReactToastify.css";
 import FshDashboard from "./pages/dashboards/FshDashboard";
-import { AuthContext } from "./context/AuthContext";
 import FshSidebar from "./components/layout/FshSidebar";
 
 
@@ -31,10 +30,11 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AuthenticatedLayout = () => {
-  const { user } = useContext(AuthContext);
-  console.log("user role: ", user.role);
+  // 根据用户的身份决定生成那种侧边栏
+  // 其他见pages/signup_page/signup_form第90-110行以及pages/signin_page/signin第30-50行
+  
   const renderSidebar = () => {
-    switch (user.role) {
+    switch (localStorage.getItem("role")) {
       case "Seller":
         return <SellerSidebar />;
       case "Buyer":
@@ -67,33 +67,31 @@ function App() {
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
           <Route
-            path="/buyer_dashboard/*"
+            path="/"
             element={
               <ProtectedRoute>
                 <AuthenticatedLayout />
               </ProtectedRoute>
             }>
-            <Route index element={<BuyerDashboard />} />
+            <Route path="/buyer_dashboard" element={<BuyerDashboard />} />
           </Route>
-
           <Route
-            path="/seller_dashboard/*"
+            path="/"
             element={
               <ProtectedRoute>
                 <AuthenticatedLayout />
               </ProtectedRoute>
             }>
-            <Route index element={<SellerDashboard />} />
+            <Route path="/seller_dashboard" element={<SellerDashboard />} />
           </Route>
-
           <Route
-            path="/fsh_dashboard/*"
+            path="/"
             element={
               <ProtectedRoute>
                 <AuthenticatedLayout />
               </ProtectedRoute>
-          }>
-            <Route index element={<FshDashboard />} />
+            }>
+            <Route path="/fsh_dashboard" element={<FshDashboard />} />
           </Route>
 
           <Route
