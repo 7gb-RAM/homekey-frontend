@@ -1,7 +1,7 @@
 import React from 'react';
 import { EyeIcon, ClockIcon, EllipsisHorizontalIcon } from '@heroicons/react/24/outline';
 
-const PropertyCard = ({ address, status, price, daysListed, engagement }) => {
+const PropertyCardSeller = ({ address, status, price, daysListed, engagement }) => {
   return (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
       <div className="flex justify-between items-start mb-6">
@@ -59,4 +59,4 @@ const PropertyCard = ({ address, status, price, daysListed, engagement }) => {
   );
 };
 
-export default PropertyCard;
+export default PropertyCardSeller;

@@ -4,8 +4,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";
-import BuyerWorkflow from "./pages/workflows/buyer_workflow";
-import SellerWorkflow from "./pages/workflows/seller_workflow";
 import BuyerDashboard from "./pages/dashboards/BuyerDashboard";
 import BuyerSidebar from "./components/layout/BuyerSidebar";
 import SellerDashboard from "./pages/dashboards/SellerDashboard";
@@ -14,6 +12,8 @@ import SellerSidebar from "./components/layout/SellerSidebar";
 import TopBar from "./components/layout/TopBar";
 import { CreateListing } from "./pages/listings/create";
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for styling
+import FshDashboard from "./pages/dashboards/FshDashboard";
+
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -35,7 +35,6 @@ const AuthenticatedLayout = () => {
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
       {/* This is where we decide whether to use the buyer or seller sidebar */}
       {/* <BuyerSidebar /> */}
-      {/* <FshSidebar /> */}
       <SellerSidebar />
       <div className="flex-1">
         <TopBar />
@@ -56,7 +55,13 @@ function App() {
           <Route path="/sign-up/*" element={<SignUp routing="path" path="/sign-up" />} />
           <Route path="/sign-in/*" element={<SignIn routing="path" path="/sign-in" />} />
 
-          <Route path="/test_buyer/*" 
+          <Route path="/test_buyer/*" element={<BuyerDashboard routing="path" path="/test_buyer" />} />
+          <Route path="/test_seller/*" element={<SellerDashboard routing="path" path="/test_seller" />} />
+          <Route path="/test_fsh/*" element={<FshDashboard routing="path" path="/test_fsh" />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/"
             element={
               <ProtectedRoute>
                 <AuthenticatedLayout />

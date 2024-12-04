@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   HomeIcon,
   ClipboardDocumentListIcon,
   UserGroupIcon,
   Cog6ToothIcon,
   DocumentIcon,
+  ChatBubbleLeftIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/outline';
 
 const FshSidebar = () => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, path: '/dashboard/fsh-dashboard' },
@@ -20,10 +23,6 @@ const FshSidebar = () => {
   return (
     <>
       <div className="w-64 bg-white dark:bg-gray-800 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200 flex flex-col flex-shrink-0">
-        <div className="mb-8">
-          <img src="../../assets/logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
-        </div>
-
         <nav className="flex-1">
           {menuItems.map((item) => (
             <a

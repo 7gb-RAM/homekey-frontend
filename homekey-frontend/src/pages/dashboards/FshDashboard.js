@@ -1,12 +1,38 @@
 // src/pages/dashboards/FshDashboard.js
 
-import React from 'react';
+import React, { useState } from 'react';
 import StatCard from '../../components/dashboard/StatCard';
 import TaskBoard from '../../components/dashboard/TaskBoard';
 import DocumentList from '../../components/dashboard/DocumentList';
 import { ClipboardDocumentListIcon, UserGroupIcon, Cog6ToothIcon, ClipboardIcon } from '@heroicons/react/24/outline';
+import PropertyCardBuyer from '../../components/dashboard/PropertyCardBuyer';
+import property1Image from '../../assets/property1.png';
+import property2Image from '../../assets/property2.png';
+import FshSidebar from '../../components/layout/FshSidebar';
 
 const FshDashboard = () => {
+    const [properties, setProperties] = useState([
+        {
+          id: 1,
+          coverImage: property1Image,
+          address: '123 Maple Street, Springfield, USA',
+          price: 450000,
+          bedrooms: 3,
+          bathrooms: 2,
+          squareFootage: 1800,
+          saved: true,
+        },
+        {
+          id: 2,
+          coverImage: property2Image,
+          address: '456 Oak Avenue, Shelbyville, USA',
+          price: 525000,
+          bedrooms: 4,
+          bathrooms: 3,
+          squareFootage: 2200,
+          saved: false,
+        },
+      ]);
   const stats = [
     {
       title: 'Total Listings Approved',
@@ -48,8 +74,18 @@ const FshDashboard = () => {
     { title: 'Property Inspection Report for 321 Maple Rd' },
   ];
 
+  const handleSaveProperty = (propertyId) => {
+    // Toggle the saved state of the property
+    setProperties((prevProperties) =>
+      prevProperties.map((property) =>
+        property.id === propertyId ? { ...property, saved: !property.saved } : property
+      )
+    );
+  };
+
   return (
     <div className="flex">
+      <FshSidebar></FshSidebar>
       <div className="p-8 bg-white dark:bg-gray-900 min-h-screen flex-1">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">FSH Dashboard</h1>
@@ -73,13 +109,22 @@ const FshDashboard = () => {
           ))}
         </div>
 
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Tasks</h2>
-        <div className="mb-8">
-          <TaskBoard tasks={tasks} />
+        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+          Listed Properties
+        </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {properties.map((property) => (
+            <PropertyCardBuyer
+              key={property.id}
+              {...property}
+              onSave={() => handleSaveProperty(property.id)}
+            />
+          ))}
         </div>
 
-        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Documents</h2>
-        <div>
+        <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Tasks and Documents</h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <TaskBoard tasks={tasks} />
           <DocumentList documents={documents} />
         </div>
       </div>

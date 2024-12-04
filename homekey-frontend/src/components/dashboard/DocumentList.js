@@ -12,9 +12,11 @@ const DocumentList = ({ documents }) => {
               <LightBulbIcon className="h-5 w-5 text-gray-400 dark:text-gray-500" />
               <span className="text-gray-700 dark:text-gray-300">{doc.title}</span>
             </div>
-            <button className="text-primary hover:text-primary/80 dark:text-primary-400 dark:hover:text-primary-300">
-              View
-            </button>
+            <span className={`px-3 py-1 rounded-full text-sm ${
+              'bg-dark-100 bg-dark-800 text-purplw-800 dark:text-purple-300'
+            }`}>
+              {"View"}
+            </span>
           </div>
         ))}
       </div>

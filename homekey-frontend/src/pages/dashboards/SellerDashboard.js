@@ -1,10 +1,10 @@
 import React from 'react';
 import StatCard from '../../components/dashboard/StatCard';
-import PropertyCard from '../../components/dashboard/PropertyCard';
 import TaskBoard from '../../components/dashboard/TaskBoard';
 import DocumentList from '../../components/dashboard/DocumentList';
 import { HomeIcon, ClockIcon, CurrencyDollarIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import SellerSidebar from '../../components/layout/SellerSidebar';
+import PropertyCardSeller from '../../components/dashboard/PropertyCardSeller';
 
 const SellerDashboard = () => {
   const stats = [
@@ -89,7 +89,7 @@ const SellerDashboard = () => {
       <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Active Listings</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {properties.map((property, index) => (
-          <PropertyCard key={index} {...property} />
+          <PropertyCardSeller key={index} {...property} />
         ))}
       </div>
 
