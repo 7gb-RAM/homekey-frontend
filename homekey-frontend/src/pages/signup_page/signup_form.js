@@ -100,12 +100,10 @@ export function SignUpForm() {
             case "Buyer":
               navigate("/buyer_dashboard");
               break;
+            default:
+              break;
           }
         }
-      }).catch(error=>{
-        console.error("Error:", error);
-        toast.error("Server error");
-        setErrors({ apiError: "Server error. Please try again later." });
       })
       setLoading(false);
     }

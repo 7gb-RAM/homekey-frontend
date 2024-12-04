@@ -1,6 +1,6 @@
 import SignIn from "./pages/signin_page/signin";
 import SignUp from "./pages/signup_page/signup";
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import Settings from "./pages/Settings";
 import { ThemeProvider } from "./context/ThemeContext";

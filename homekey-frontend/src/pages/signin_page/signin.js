@@ -6,7 +6,6 @@ import { toast } from "react-toastify";import { useNavigate } from "react-router
 export default function SignIn() {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
   useEffect(()=>{
     if(localStorage.getItem("user_id")){
       navigate('/')
@@ -49,8 +48,8 @@ export default function SignIn() {
           case "Buyer":
             navigate("/buyer_dashboard");
             break;
-          // default:
-          //   navigate("/");
+          default:
+            break;
         }
       }
     })
