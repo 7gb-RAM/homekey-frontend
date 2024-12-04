@@ -10,7 +10,6 @@ import { sleep } from "../../App";
 import FileInput from "../../components/file_input";
 
 export function CreateListing() {
-  const [isLoading, setLoading] = useState(false);
   /*
     Status: 
       1. to_be_initiated
@@ -32,84 +31,6 @@ export function CreateListing() {
   // listings/upload_photo
   // listings/create_listing
 
-  // const callNotifyFsh = (data) => {
-  //   const formData = new FormData();
-  //   formData.append("document", data.document);
-  //   formData.append("user_id", data.user_id);
-  //   setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "loading" }));
-  //   axios
-  //     .post("http://localhost:5001/listings/notify_fsh", formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "success" }));
-  //     })
-  //     .catch((error) => {
-  //       setFormSubmitStep((prev) => ({ step: "notify_fsh", status: "error" }));
-  //     });
-  // };
-
-  // const callPrepareHome = () => {
-  //   setFormSubmitStep((prev) => ({ step: "prepare_home", status: "loading" }));
-  //   axios
-  //     .post("http://localhost:5001/listings/prepare_home", {user_id: localStorage.getItem('user_id')}, {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setFormSubmitStep((prev) => ({ step: "prepare_home", status: "success" }));
-  //     })
-  //     .catch((error) => {
-  //       setFormSubmitStep((prev) => ({ step: "prepare_home", status: "error" }));
-  //     });
-  // };
-
-  // const callUploadPhoto = (data) => {
-  //   setFormSubmitStep((prev) => ({ step: "upload_photo", status: "loading" }));
-  //   axios
-  //     .post("http://localhost:5001/listings/upload_photo", data, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     })
-  //     .then((response) => {
-  //       setFormSubmitStep((prev) => ({ step: "upload_photo", status: "success" }));
-  //     })
-  //     .catch((error) => {
-  //       setFormSubmitStep((prev) => ({ step: "upload_photo", status: "error" }));
-  //     });
-  // };
-
-  // const callCreateApi = (data) => {
-  //   setLoading(true);
-  //   sleep(1000).then(() => {
-  //     axios
-  //       .post("http://localhost:5001/listings/create_listing", data, {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       })
-  //       .then((response) => {
-  //         console.log(response);
-  //         navigate("/listings");
-  //         toast.success("Successfully created listing");
-  //         setLoading(false);
-  //       })
-  //       .catch((error) => {
-  //         let errorMsg = "Something went wrong";
-  //         if (error["response"]["data"]["error"]) {
-  //           errorMsg = error["response"]["data"]["error"];
-  //         }
-  //         toast.error(errorMsg);
-
-  //         setLoading(false);
-  //       });
-  //   });
-  // };
-
   const onSubmit = async (event) => {
     event.preventDefault();
 
@@ -127,38 +48,13 @@ export function CreateListing() {
     console.log(formValues);
     setSubmittedFormData((p) => formValues);
     // callNotifyFsh({ document: formValues.document, user_id: localStorage.getItem("user_id") });
-    // callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
+    callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
   };
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (formSubmitStep.stauts === "success") {
-  //     if (formSubmitStep.step === "notify_fsh") {
-  //       callPrepareHome();
-  //     } else if (formSubmitStep.step === "prepare_home") {
-  //       callUploadPhoto({photo: submittedFormData.photo, user_id: localStorage.getItem("user_id")});
-  //     } else if (formSubmitStep.step === "upload_photo") {
-  //       callCreateApi(submittedFormData)
-  //     } else if (formSubmitStep.step === "create_listing") {
-  //       toast.success("Successfully created a listing")
-  //       navigate('/listings')
-  //     }
-  //     return;
-  //   }
-
-  //   if (formSubmitStep.step === "error") {
-  //     if (formSubmitStep.step === "notify_fsh") {
-  //     } else if (formSubmitStep.step === "prepare_home") {
-  //     } else if (formSubmitStep.step === "upload_photo") {
-  //     } else if (formSubmitStep.step === "create_listing") {
-
-  //     }
-  //     return;
-  //   }
-  // }, [formSubmitStep]);
   const callNotifyFsh = (data) => {
     const formData = new FormData();
     formData.append("document", data.document);
-    formData.append("user_id", data.user_id);
+    formData.append("user_id", localStorage.getItem("user_id"));
 
     setFormSubmitStep({ step: "notify_fsh", status: "loading" });
 
@@ -217,7 +113,7 @@ export function CreateListing() {
   };
 
   const callCreateApi = (data) => {
-    setLoading(true);
+    setFormSubmitStep({ step: "create_listing", status: "loading" });
     sleep(1000).then(() => {
       axios
         .post("http://localhost:5001/listings/create_listing", data, {
@@ -226,17 +122,10 @@ export function CreateListing() {
           },
         })
         .then((response) => {
-          navigate("/listings");
-          toast.success("Successfully created listing");
-          setLoading(false);
+          setFormSubmitStep({ step: "create_listing", status: "success" });
         })
         .catch((error) => {
-          let errorMsg = "Something went wrong";
-          if (error["response"]["data"]["error"]) {
-            errorMsg = error["response"]["data"]["error"];
-          }
-          toast.error(errorMsg);
-          setLoading(false);
+          setFormSubmitStep({ step: "create_listing", status: "error" });
         });
     });
   };
@@ -248,17 +137,20 @@ export function CreateListing() {
       switch (step) {
         case "notify_fsh":
           callPrepareHome(submittedFormData)
+          // callPrepareHome(submittedFormData)
           break;
         case "prepare_home":
-          toast.success("Successfully created a listing");
-          navigate("/listings");
+          callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
           // callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
           break;
         case "upload_photo":
-          callNotifyFsh(submittedFormData);
+          toast.success("Successfully created a listing");
+          navigate("/listings");
+          
           break;
         case "create_listing":
-          callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
+          callNotifyFsh(submittedFormData);
+
           break;
         default:
           break;
@@ -279,10 +171,10 @@ export function CreateListing() {
             <SecondaryBtn title={"Cancel"} onClick={() => navigate("/listings")} />
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={formSubmitStep.stauts === "loading"}
               className="min-w-32 bg-primary text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-primary/90"
             >
-              {isLoading ? <Loader /> : <span>Save</span>}
+              {formSubmitStep.stauts === "loading" ? <Loader /> : <span>Save</span>}
             </button>
           </div>
         </div>
