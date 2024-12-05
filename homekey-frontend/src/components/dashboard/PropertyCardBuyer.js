@@ -19,7 +19,6 @@ const PropertyCardBuyer = ({
 }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-      {/* Cover Image and Save Button */}
       <div className="relative">
         <img src={coverImage} alt="Property" className="w-full h-48 object-cover" />
         <button
@@ -35,7 +34,6 @@ const PropertyCardBuyer = ({
         </button>
       </div>
 
-      {/* Property Details */}
       <div className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{address}</h3>
         <p className="font-semibold text-xl text-gray-900 dark:text-white mb-4">
@@ -45,22 +43,21 @@ const PropertyCardBuyer = ({
           <div className="flex items-center mr-4">
             <BuildingOfficeIcon className="h-5 w-5 mr-1" />
             <span>
-              {bedrooms} bed{bedrooms !== 1 ? 's' : ''}
+              {bedrooms}B
             </span>
           </div>
           <div className="flex items-center mr-4">
             <HomeIcon className="h-5 w-5 mr-1" />
             <span>
-              {bathrooms} bath{bathrooms !== 1 ? 's' : ''}
+              {bathrooms}Ba
             </span>
           </div>
           <div className="flex items-center">
             <Square3Stack3DIcon className="h-5 w-5 mr-1" />
-            <span>{squareFootage.toLocaleString()} sqft</span>
+            <span>{squareFootage.toLocaleString()} </span>
           </div>
         </div>
 
-        {/* Call to Action Button */}
         <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
           Request Info
         </button>

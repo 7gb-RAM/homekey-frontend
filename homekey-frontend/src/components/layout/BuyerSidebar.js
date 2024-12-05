@@ -1,3 +1,4 @@
+// src/components/sidebars/BuyerSidebar.js
 import React, { useState } from 'react';
 import {
   HomeIcon,
@@ -8,6 +9,7 @@ import {
   UserCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+import { NavLink } from 'react-router-dom'; // Import NavLink
 
 const BuyerSidebar = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -32,14 +34,20 @@ const BuyerSidebar = () => {
         {/* Navigation Menu */}
         <nav className="flex-1">
           {menuItems.map((item) => (
-            <a
+            <NavLink
               key={item.name}
-              href={item.path}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200"
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 p-2 rounded-lg mb-2 transition-colors duration-200 ${
+                  isActive
+                    ? 'bg-gray-200 dark:bg-gray-700 text-blue-600 dark:text-blue-400'
+                    : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+                }`
+              }
             >
               <item.icon className="h-5 w-5" />
               <span>{item.name}</span>
-            </a>
+            </NavLink>
           ))}
         </nav>
       </div>
@@ -48,6 +56,7 @@ const BuyerSidebar = () => {
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
         className="fixed bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-200 z-50"
+        aria-label="Toggle Chat"
       >
         {isChatOpen ? (
           <XMarkIcon className="h-6 w-6" />

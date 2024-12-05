@@ -14,6 +14,7 @@ import { CreateListing } from "./pages/listings/create";
 import "react-toastify/dist/ReactToastify.css";
 import FshDashboard from "./pages/dashboards/FshDashboard";
 import FshSidebar from "./components/layout/FshSidebar";
+import Search from "./pages/listings/search";
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -78,6 +79,8 @@ function App() {
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
             <Route path="/settings" element={<Settings />} />
+
+            <Route path="/search" element={<Search>5</Search>} />
           </Route>
         </Routes>
       </Router>
