@@ -1,4 +1,3 @@
-// src/components/sidebars/BuyerSidebar.js
 import React, { useState } from 'react';
 import {
   HomeIcon,
@@ -9,7 +8,7 @@ import {
   UserCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { NavLink } from 'react-router-dom'; // Import NavLink
+import { NavLink } from 'react-router-dom';
 
 const BuyerSidebar = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -31,7 +30,6 @@ const BuyerSidebar = () => {
           <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
         </div>
 
-        {/* Navigation Menu */}
         <nav className="flex-1">
           {menuItems.map((item) => (
             <NavLink
@@ -52,7 +50,6 @@ const BuyerSidebar = () => {
         </nav>
       </div>
 
-      {/* Floating Chat Button */}
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
         className="fixed bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-200 z-50"
@@ -65,7 +62,6 @@ const BuyerSidebar = () => {
         )}
       </button>
 
-      {/* Chat Panel */}
       {isChatOpen && (
         <div className="fixed bottom-24 right-6 w-96 h-[600px] bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-50 overflow-hidden flex flex-col">
           <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">

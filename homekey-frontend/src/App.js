@@ -17,6 +17,7 @@ import FshSidebar from "./components/layout/FshSidebar";
 import Search from "./pages/listings/search";
 import Saved from "./pages/listings/saved";
 import BuyerWorkflow from "./pages/workflows/buyer_workflow";
+import Messages from "./pages/messages/messages";
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -82,6 +83,7 @@ function App() {
             <Route path="/listings/create" element={<CreateListing />} />
             <Route path="/saved" element={<Saved />} />
             <Route path="/tasks" element={<BuyerWorkflow />} />
+            <Route path="/messages" element={<Messages />} />
             <Route path="/settings" element={<Settings />} />
 
             <Route path="/search" element={<Search />} />

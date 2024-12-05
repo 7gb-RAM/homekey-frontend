@@ -9,7 +9,7 @@ export function Steps({
   setMobileFiltersOpen,
   isDisclosureDisabled,
   currentStep,
-  updateOptionCheckedStatus, // Accept the function as a prop
+  updateOptionCheckedStatus,
   children,
 }) {
   const getStepsForm = ({ isMobile }) => {
@@ -17,12 +17,12 @@ export function Steps({
       <form className={isMobile ? "mt-4 border-t border-gray-200" : "hidden lg:block"}>
         {steps.map((step) => (
           <StepItem
-            key={step.id} // Added key prop
+            key={step.id}
             step={step}
             isDisabled={isDisclosureDisabled}
             isOpen={currentStep === step.id}
             stepClass={isMobile && "px-6"}
-            updateOptionCheckedStatus={updateOptionCheckedStatus} // Pass it to StepItem
+            updateOptionCheckedStatus={updateOptionCheckedStatus}
           />
         ))}
       </form>
@@ -34,15 +34,11 @@ export function Steps({
         <MobileDialog title={"Steps"} isOpen={mobileFiltersOpen} onClose={setMobileFiltersOpen}>
           {getStepsForm({ isMobile: true })}
         </MobileDialog>
-
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Header title={title} onClickMenu={() => setMobileFiltersOpen(true)} />
-
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {getStepsForm({ isMobile: false })}
-
-              {/* Main content */}
               <div className="lg:col-span-3">{children}</div>
             </div>
           </section>

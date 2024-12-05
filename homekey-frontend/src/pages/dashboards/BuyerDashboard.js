@@ -3,8 +3,6 @@ import StatCard from '../../components/dashboard/StatCard';
 import PropertyCardBuyer from '../../components/dashboard/PropertyCardBuyer';
 import TaskBoard from '../../components/dashboard/TaskBoard';
 import { HomeIcon, HeartIcon, EyeIcon, CalendarDaysIcon } from '@heroicons/react/24/outline';
-
-// Import images from src/assets
 import property1Image from '../../assets/property1.png';
 import property2Image from '../../assets/property2.png';
 import DocumentList from '../../components/dashboard/DocumentList';
