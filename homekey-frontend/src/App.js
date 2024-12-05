@@ -15,6 +15,8 @@ import "react-toastify/dist/ReactToastify.css";
 import FshDashboard from "./pages/dashboards/FshDashboard";
 import FshSidebar from "./components/layout/FshSidebar";
 import Search from "./pages/listings/search";
+import Saved from "./pages/listings/saved";
+import BuyerWorkflow from "./pages/workflows/buyer_workflow";
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -78,9 +80,11 @@ function App() {
             />
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
+            <Route path="/saved" element={<Saved />} />
+            <Route path="/tasks" element={<BuyerWorkflow />} />
             <Route path="/settings" element={<Settings />} />
 
-            <Route path="/search" element={<Search>5</Search>} />
+            <Route path="/search" element={<Search />} />
           </Route>
         </Routes>
       </Router>

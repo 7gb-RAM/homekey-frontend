@@ -1,27 +1,22 @@
-import { useState } from "react";
 import { PhotoIcon } from "@heroicons/react/20/solid";
 
-export function FileUpload() {
-  const [file, setFile] = useState(null);
-
-  // Handle the file input change (whether via button or drag-and-drop)
+export function FileUpload({ file, onFileUploaded }) {
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
-    console.log(uploadedFile);
-    setFile(uploadedFile);
+    if (onFileUploaded) {
+      onFileUploaded(uploadedFile);
+    }
   };
 
-  // Handle the drop event
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Get the file from the drop event
     const uploadedFile = e.dataTransfer.files[0];
-    setFile(uploadedFile);
+    if (onFileUploaded) {
+      onFileUploaded(uploadedFile);
+    }
   };
 
-  // Handle drag over to allow drop
   const handleDragOver = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -36,21 +31,23 @@ export function FileUpload() {
         className="mt-2 flex justify-center bg-white rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        onDragEnter={handleDragOver} // Optional for better UX
+        onDragEnter={handleDragOver}
       >
         <div className="text-center">
           <PhotoIcon aria-hidden="true" className="mx-auto size-12 text-gray-300" />
           <div className="mt-4 flex text-sm/6 text-gray-600">
             <label
               htmlFor="document"
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 
+                         focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 
+                         focus-within:ring-offset-2 hover:text-indigo-500"
             >
               <span>Upload a file</span>
               <input
                 id="document"
                 name="document"
                 type="file"
-                className="sr-only"
+                className="hidden"
                 onChange={handleFileChange}
               />
             </label>
@@ -60,7 +57,6 @@ export function FileUpload() {
         </div>
       </div>
 
-      {/* Optional: Display the uploaded file name */}
       {file && (
         <div className="mt-4 text-sm text-white">
           <p>Uploaded file: {file.name}</p>
