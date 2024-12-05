@@ -1,59 +1,137 @@
-// src/components/SearchBar.js
 import React, { useState } from 'react';
-
 const SearchBar = ({ onSearch }) => {
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
-
+  const [category, setCategory] = useState('price');
+  const [minValue, setMinValue] = useState('');
+  const [maxValue, setMaxValue] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate input
-    if (minPrice && maxPrice && parseInt(minPrice) > parseInt(maxPrice)) {
-      alert('Minimum price cannot be greater than maximum price.');
+    if (minValue && maxValue && parseInt(minValue) > parseInt(maxValue)) {
+      alert('Minimum value cannot be greater than maximum value.');
       return;
     }
-    // Pass the search criteria to the parent component
-    onSearch({ minPrice, maxPrice });
+    let searchCriteria = {};
+    switch (category) {
+      case 'price':
+        if (minValue) searchCriteria.minPrice = minValue;
+        if (maxValue) searchCriteria.maxPrice = maxValue;
+        break;
+      case 'bedrooms':
+        if (minValue) searchCriteria.minBedrooms = minValue;
+        if (maxValue) searchCriteria.maxBedrooms = maxValue;
+        break;
+      case 'bathrooms':
+        if (minValue) searchCriteria.minBathrooms = minValue;
+        if (maxValue) searchCriteria.maxBathrooms = maxValue;
+        break;
+      default:
+        break;
+    }
+    onSearch(searchCriteria);
+  };
+
+  const getMinLabel = () => {
+    switch (category) {
+      case 'price':
+        return 'Min Price ($)';
+      case 'bedrooms':
+        return 'Min Bedrooms';
+      case 'bathrooms':
+        return 'Min Bathrooms';
+      default:
+        return 'Min Value';
+    }
+  };
+
+  const getMaxLabel = () => {
+    switch (category) {
+      case 'price':
+        return 'Max Price ($)';
+      case 'bedrooms':
+        return 'Max Bedrooms';
+      case 'bathrooms':
+        return 'Max Bathrooms';
+      default:
+        return 'Max Value';
+    }
+  };
+
+  const getMinPlaceholder = () => {
+    switch (category) {
+      case 'price':
+        return '100,000';
+      case 'bedrooms':
+        return '1';
+      case 'bathrooms':
+        return '1';
+      default:
+        return '';
+    }
+  };
+
+  const getMaxPlaceholder = () => {
+    switch (category) {
+      case 'price':
+        return '500,000';
+      case 'bedrooms':
+        return '5';
+      case 'bathrooms':
+        return '4';
+      default:
+        return '';
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md mb-6">
       <div className="flex flex-col sm:flex-row items-center gap-4">
-        {/* Minimum Price */}
         <div className="flex items-center">
-          <label htmlFor="minPrice" className="text-gray-700 dark:text-gray-300 mr-2">
-            Min Price ($)
+          <select
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setMinValue('');
+              setMaxValue('');
+            }}
+            className="w-auto p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-700 dark:text-white mr-2"
+          >
+            <option value="price">Price</option>
+            <option value="bedrooms">Bedrooms</option>
+            <option value="bathrooms">Bathrooms</option>
+          </select>
+        </div>
+
+        <div className="flex items-center">
+          <label htmlFor="minValue" className="text-gray-700 dark:text-gray-300 mr-2">
+            {getMinLabel()}
           </label>
           <input
             type="number"
-            id="minPrice"
-            name="minPrice"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-            placeholder="100,000"
+            id="minValue"
+            name="minValue"
+            value={minValue}
+            onChange={(e) => setMinValue(e.target.value)}
+            placeholder={getMinPlaceholder()}
             className="w-30 p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-700 dark:text-white"
             min="0"
           />
         </div>
 
-        {/* Maximum Price */}
         <div className="flex items-center">
-          <label htmlFor="maxPrice" className="text-gray-700 dark:text-gray-300 mr-2">
-            Max Price ($)
+          <label htmlFor="maxValue" className="text-gray-700 dark:text-gray-300 mr-2">
+            {getMaxLabel()}
           </label>
           <input
             type="number"
-            id="maxPrice"
-            name="maxPrice"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-            placeholder="500,000"
+            id="maxValue"
+            name="maxValue"
+            value={maxValue}
+            onChange={(e) => setMaxValue(e.target.value)}
+            placeholder={getMaxPlaceholder()}
             className="w-30 p-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 dark:bg-gray-700 dark:text-white"
             min="0"
           />
         </div>
 
-        {/* Search Button */}
         <div className="mt-4 sm:mt-0 sm:ml-auto">
           <button
             type="submit"
