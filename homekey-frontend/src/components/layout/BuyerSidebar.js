@@ -14,8 +14,8 @@ const BuyerSidebar = () => {
 
   const menuItems = [
     { name: 'Home', icon: HomeIcon, path: '/' },
-    { name: 'Search Properties', icon: MagnifyingGlassIcon, path: '/search' },
-    { name: 'Saved Properties', icon: HeartIcon, path: '/saved' },
+    { name: 'Search Listings', icon: MagnifyingGlassIcon, path: '/search' },
+    { name: 'Saved Listings', icon: HeartIcon, path: '/saved' },
     { name: 'Tasks', icon: ClipboardDocumentListIcon, path: '/tasks' },
     { name: 'Messages', icon: ChatBubbleLeftIcon, path: '/messages' },
     { name: 'Account Settings', icon: UserCircleIcon, path: '/settings' },

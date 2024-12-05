@@ -7,7 +7,6 @@ import { HomeIcon, HeartIcon, EyeIcon, CalendarDaysIcon } from '@heroicons/react
 // Import images from src/assets
 import property1Image from '../../assets/property1.png';
 import property2Image from '../../assets/property2.png';
-import BuyerSidebar from '../../components/layout/BuyerSidebar';
 import DocumentList from '../../components/dashboard/DocumentList';
 
 const BuyerDashboard = () => {
@@ -36,13 +35,13 @@ const BuyerDashboard = () => {
 
   const stats = [
     {
-      title: 'Saved Properties',
+      title: 'Saved Listings',
       value: '8',
       subtitle: '2 New this week',
       icon: HeartIcon,
     },
     {
-      title: 'Viewed Properties',
+      title: 'Viewed Listings',
       value: '20',
       subtitle: '↑ 5% from last week',
       icon: EyeIcon,
@@ -95,7 +94,7 @@ const BuyerDashboard = () => {
         </div>
 
         <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
-          Recommended Properties
+          Recommended Listings
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           {properties.map((property) => (
