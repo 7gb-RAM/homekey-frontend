@@ -35,10 +35,10 @@ export default function SignIn() {
         toast.error(data.error);
         return;
       } else {
-        toast.success("User login successfully");
         localStorage.setItem("user_id", data.user_id);
         localStorage.setItem("role", data.role);
         navigate('/', {replace: true});
+        window.location.reload();
       }
     })
     setLoading(false);

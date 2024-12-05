@@ -89,6 +89,7 @@ export function SignUpForm() {
           localStorage.setItem("user_id", data.user_id);
           localStorage.setItem("role", data.role);
           navigate('/', {replace: true});
+          window.location.reload();
         }
       })
       setLoading(false);
