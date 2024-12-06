@@ -84,7 +84,7 @@ const BuyerDashboard = () => {
   }
   const getAllListings = () => {
     axios
-      .get(`http://localhost:5001/listings/get_all_listings?user_id=${localStorage.getItem("user_id")}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/listings/get_all_listings?user_id=${localStorage.getItem("user_id")}`)
       .then((response) => {
         const listings = [];
         response.data.map((listing) => {

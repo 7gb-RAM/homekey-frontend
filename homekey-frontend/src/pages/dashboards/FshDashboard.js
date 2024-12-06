@@ -85,7 +85,7 @@ const FshDashboard = () => {
   const [allListings, setAllListings] = useState();
   const getAllListings = () => {
     axios
-      .get(`http://localhost:5001/listings/get_all_listings?user_id=${localStorage.getItem("user_id")}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/listings/get_all_listings?user_id=${localStorage.getItem("user_id")}`)
       .then((response) => {
         const listings = [];
         response.data.map((listing) => {
@@ -106,7 +106,7 @@ const FshDashboard = () => {
   };
   const getPendingListings = () => {
     axios
-      .get(`http://localhost:5001/listings/get_pending_listings?user_id=${localStorage.getItem("user_id")}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/listings/get_pending_listings?user_id=${localStorage.getItem("user_id")}`)
       .then((response) => {
         const listings = [];
         response.data.map((listing) => {
@@ -146,7 +146,7 @@ const FshDashboard = () => {
   }, [reloadPage]);
   const onClickApprove = (listing_id) => {
     axios
-      .post(`http://localhost:5001/listings/approve_listing`, { user_id: localStorage.getItem("user_id"), listing_id })
+      .post(`${process.env.REACT_APP_BASE_URL}/listings/approve_listing`, { user_id: localStorage.getItem("user_id"), listing_id })
       .then((response) => {
         toast.success("Approved successfully")
         

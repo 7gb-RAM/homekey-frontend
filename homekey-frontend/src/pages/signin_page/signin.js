@@ -22,7 +22,7 @@ export default function SignIn() {
     };
     setLoading(true);
 
-    await fetch("http://localhost:5001/auth/login",{
+    await fetch(`${process.env.REACT_APP_BASE_URL}/auth/login`,{
       method: "POST",
       headers: {
         "Content-Type": "application/json",

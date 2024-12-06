@@ -10,7 +10,7 @@ export default function Search() {
   const getAllListings = async () => {
     try {
       const userId = localStorage.getItem('user_id');
-      const response = await fetch(`http://localhost:5001/listings/get_all_listings?user_id=${userId}`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/listings/get_all_listings?user_id=${userId}`, {
         method: 'GET',
       });
       if (!response.ok) {

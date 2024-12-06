@@ -58,7 +58,7 @@ export function CreateListing() {
     setFormSubmitStep({ step: "notify_fsh", status: "loading" });
 
     axios
-      .post("http://localhost:5001/listings/notify_fsh", formData, {
+      .post(`${process.env.REACT_APP_BASE_URL}/listings/notify_fsh`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -76,7 +76,7 @@ export function CreateListing() {
 
     axios
       .post(
-        "http://localhost:5001/listings/prepare_home",
+        `${process.env.REACT_APP_BASE_URL}/listings/prepare_home`,
         {
           user_id: localStorage.getItem("user_id"),
         },
@@ -98,7 +98,7 @@ export function CreateListing() {
     setFormSubmitStep({ step: "upload_photo", status: "loading" });
 
     axios
-      .post("http://localhost:5001/listings/upload_photo", data, {
+      .post(`${process.env.REACT_APP_BASE_URL}/listings/upload_photo`, data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -115,7 +115,7 @@ export function CreateListing() {
     setFormSubmitStep({ step: "create_listing", status: "loading" });
     sleep(1000).then(() => {
       axios
-        .post("http://localhost:5001/listings/create_listing", data, {
+        .post(`${process.env.REACT_APP_BASE_URL}/listings/create_listing`, data, {
           headers: {
             "Content-Type": "application/json",
           },
