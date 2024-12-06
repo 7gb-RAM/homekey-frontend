@@ -46,7 +46,11 @@ export function CreateListing() {
       }
     }
     console.log(formValues);
-    setSubmittedFormData((p) => ({user_id: parseInt(localStorage.getItem("user_id")),...formValues,  price: parseInt(formValues.price), }));
+    setSubmittedFormData((p) => ({
+      user_id: parseInt(localStorage.getItem("user_id")),
+      ...formValues,
+      price: parseInt(formValues.price),
+    }));
     callNotifyFsh({ document: formValues.document, user_id: localStorage.getItem("user_id") });
   };
   const navigate = useNavigate();
@@ -135,7 +139,7 @@ export function CreateListing() {
     if (status === "success") {
       switch (step) {
         case "notify_fsh":
-          callPrepareHome(submittedFormData)
+          callPrepareHome(submittedFormData);
           break;
         case "prepare_home":
           callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
@@ -168,81 +172,85 @@ export function CreateListing() {
             <SecondaryBtn title={"Cancel"} onClick={() => navigate("/listings")} />
             <button
               type="submit"
-              disabled={formSubmitStep.stauts === "loading"}
+              disabled={formSubmitStep.status === "loading"}
               className="min-w-32 bg-primary text-white rounded-lg p-2 flex items-center justify-center gap-2 hover:bg-primary/90"
             >
-              {formSubmitStep.stauts === "loading" ? <Loader /> : <span>Save</span>}
+              {formSubmitStep.status === "loading" ? <Loader /> : <span>Save</span>}
             </button>
           </div>
         </div>
 
-        {/*  */}
-        <div class="sm:col-span-3 m-2">
-          <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+        {/* Title */}
+        <div className="sm:col-span-3 m-2">
+          <label htmlFor="title" className="block text-lg text-gray-900 dark:text-gray-100 font-medium">
             Title
           </label>
-          <div class="mt-2">
+          <div className="mt-2">
             <input
               type="text"
               required
               name="title"
-              id="first-name"
-              autocomplete="given-name"
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              id="title"
+              autoComplete="given-name"
+              className="block w-full rounded-md bg-white dark:bg-gray-800 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
             />
           </div>
         </div>
-        {/*  */}
-        <div class="col-span-full m-2">
-          <label for="about" class="block text-lg text-white font-medium text-gray-900">
+
+        {/* Description */}
+        <div className="col-span-full m-2">
+          <label htmlFor="description" className="block text-lg text-gray-900 dark:text-gray-100 font-medium">
             Description
           </label>
-          <div class="mt-2">
+          <div className="mt-2">
             <textarea
               name="description"
               required
               id="description"
               rows="3"
-              class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+              className="block w-full rounded-md bg-white dark:bg-gray-800 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
             ></textarea>
           </div>
-          <p class="mt-3 text-sm/6 text-white">Write a few sentences about your property.</p>
+          <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">Write a few sentences about your property.</p>
         </div>
-        {/*  */}
-        <div className="text-white">
+
+        {/* File Inputs */}
+        <div className="text-gray-900 dark:text-white">
           <FileInput />
           <FileUpload />
         </div>
-        {/*  */}
+
+        {/* Address & Price */}
         <div className="flex flex-row justify-between">
-          <div class="w-full sm:col-span-3 m-2">
-            <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+          <div className="w-full sm:col-span-3 m-2">
+            <label htmlFor="address" className="block text-lg text-gray-900 dark:text-gray-100 font-medium">
               Address
             </label>
-            <div class="mt-2">
+            <div className="mt-2">
               <input
                 type="text"
                 required
                 name="address"
-                id="first-name"
-                autocomplete="given-name"
-                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                id="address"
+                autoComplete="given-name"
+                className="block w-full rounded-md bg-white dark:bg-gray-800 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
               />
             </div>
           </div>
-          {/*  */}
-          <div class="w-full sm:col-span-3 m-2">
-            <label for="first-name" class="block text-lg text-white font-medium text-gray-900">
+
+          {/* Price */}
+          <div className="w-full sm:col-span-3 m-2">
+            <label htmlFor="price" className="block text-lg text-gray-900 dark:text-gray-100 font-medium">
               Price
             </label>
-            <div class="mt-2">
+            <div className="mt-2">
               <input
                 type="text"
                 required
                 name="price"
                 id="price"
-                autocomplete="given-name"
-                class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                autoComplete="given-name"
+                className="block w-full rounded-md bg-white dark:bg-gray-800 px-3 py-1.5 text-base text-gray-900 dark:text-gray-100 outline outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-600 placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm"
               />
             </div>
           </div>
