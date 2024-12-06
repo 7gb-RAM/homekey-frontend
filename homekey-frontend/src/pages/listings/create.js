@@ -46,9 +46,8 @@ export function CreateListing() {
       }
     }
     console.log(formValues);
-    setSubmittedFormData((p) => formValues);
-    // callNotifyFsh({ document: formValues.document, user_id: localStorage.getItem("user_id") });
-    callCreateApi({ ...formValues, user_id: localStorage.getItem("user_id") });
+    setSubmittedFormData((p) => ({user_id: parseInt(localStorage.getItem("user_id")),...formValues,  price: parseInt(formValues.price), }));
+    callNotifyFsh({ document: formValues.document, user_id: localStorage.getItem("user_id") });
   };
   const navigate = useNavigate();
   const callNotifyFsh = (data) => {
@@ -137,19 +136,17 @@ export function CreateListing() {
       switch (step) {
         case "notify_fsh":
           callPrepareHome(submittedFormData)
-          // callPrepareHome(submittedFormData)
           break;
         case "prepare_home":
           callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
           // callUploadPhoto({ photo: submittedFormData.photo, user_id: localStorage.getItem("user_id") });
           break;
         case "upload_photo":
-          toast.success("Successfully created a listing");
-          navigate("/listings");
-          
+          callCreateApi(submittedFormData);
           break;
         case "create_listing":
-          callNotifyFsh(submittedFormData);
+          toast.success("Successfully created a listing");
+          navigate("/listings");
 
           break;
         default:
