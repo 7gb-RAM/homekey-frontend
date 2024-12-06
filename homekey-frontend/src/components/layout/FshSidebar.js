@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   HomeIcon,
   ClipboardDocumentListIcon,
@@ -7,28 +7,33 @@ import {
   DocumentIcon,
   ChatBubbleLeftIcon,
   XMarkIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
+import { useLocation } from "react-router-dom";
 
 const FshSidebar = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const location = useLocation();
 
   const menuItems = [
-    { name: 'Dashboard', icon: HomeIcon, path: '/dashboard/fsh-dashboard' },
-    { name: 'Approve Listings', icon: ClipboardDocumentListIcon, path: '/dashboard/fsh-dashboard/approve-listings' },
-    { name: 'Manage Disclosures', icon: DocumentIcon, path: '/dashboard/fsh-dashboard/manage-disclosures' },
-    { name: 'Team Management', icon: UserGroupIcon, path: '/dashboard/fsh-dashboard/team-management' },
-    { name: 'Settings', icon: Cog6ToothIcon, path: '/dashboard/settings' },
+    { name: "Dashboard", icon: HomeIcon, path: "/" },
+    { name: "Approved Listings", icon: ClipboardDocumentListIcon, path: "/approved-listings" },
   ];
 
   return (
     <>
       <div className="w-64 bg-white dark:bg-gray-800 min-h-screen p-4 border-r border-gray-200 dark:border-gray-700 transition-colors duration-200 flex flex-col flex-shrink-0">
+        {/* Logo */}
+        <div className="mb-8">
+          <img src="/homekey-logo.png" alt="Homekey Logo" className="w-36 h-auto mb-6" />
+        </div>
         <nav className="flex-1">
           {menuItems.map((item) => (
             <a
               key={item.name}
               href={item.path}
-              className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200"
+              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200 ${
+                location.pathname === item.path && "bg-gray-700"
+              }`}
             >
               <item.icon className="h-5 w-5" />
               <span>{item.name}</span>
@@ -41,11 +46,7 @@ const FshSidebar = () => {
         onClick={() => setIsChatOpen(!isChatOpen)}
         className="fixed bottom-6 right-6 p-4 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-all duration-200 z-50"
       >
-        {isChatOpen ? (
-          <XMarkIcon className="h-6 w-6" />
-        ) : (
-          <ChatBubbleLeftIcon className="h-6 w-6" />
-        )}
+        {isChatOpen ? <XMarkIcon className="h-6 w-6" /> : <ChatBubbleLeftIcon className="h-6 w-6" />}
       </button>
 
       {isChatOpen && (
@@ -57,8 +58,8 @@ const FshSidebar = () => {
             <div className="flex items-start gap-2 mb-4">
               <div className="bg-blue-100 dark:bg-blue-900/20 rounded-lg p-3 max-w-[80%]">
                 <p className="text-gray-900 dark:text-white">
-                  Hello! I'm your AI assistant, and I'm here to help you with the home buying
-                  process. How can I assist you today?
+                  Hello! I'm your AI assistant, and I'm here to help you with the home buying process. How can I assist
+                  you today?
                 </p>
               </div>
             </div>
@@ -70,9 +71,7 @@ const FshSidebar = () => {
                 placeholder="Type your message..."
                 className="flex-1 p-2 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               />
-              <button className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                Send
-              </button>
+              <button className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Send</button>
             </div>
           </div>
         </div>

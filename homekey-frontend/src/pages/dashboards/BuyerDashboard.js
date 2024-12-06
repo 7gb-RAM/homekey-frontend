@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import StatCard from '../../components/dashboard/StatCard';
 import PropertyCardBuyer from '../../components/dashboard/PropertyCardBuyer';
 import TaskBoard from '../../components/dashboard/TaskBoard';
@@ -6,6 +6,7 @@ import { HomeIcon, HeartIcon, EyeIcon, CalendarDaysIcon } from '@heroicons/react
 import property1Image from '../../assets/property1.png';
 import property2Image from '../../assets/property2.png';
 import DocumentList from '../../components/dashboard/DocumentList';
+import axios from 'axios';
 
 const BuyerDashboard = () => {
   const [properties, setProperties] = useState([
@@ -77,7 +78,38 @@ const BuyerDashboard = () => {
       )
     );
   };
-
+  function getRandom(min, max) {
+    // Ensure min and max are integers and the min is less than or equal to max
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  const getAllListings = () => {
+    axios
+      .get(`http://localhost:5001/listings/get_all_listings?user_id=${localStorage.getItem("user_id")}`)
+      .then((response) => {
+        const listings = [];
+        response.data.map((listing) => {
+          listings.push(listing);
+        });
+        const data = listings
+          // .filter((listing) => listing.status === "Pending Approval")
+          .map((listing) => ({
+            id: listing.id,
+            coverImage: property1Image,
+            address: listing.address,
+            price: listing.price,
+            bedrooms: listing.bedrooms ?? getRandom(1, 4),
+            bathrooms: listing.bathrooms ?? getRandom(1, 4),
+            squareFootage: listing.squareFootage ?? getRandom(1000, 2500),
+          }));
+        const recommended = [data[getRandom(0,data.length-1)], data[getRandom(0,data.length-1)]]
+        setProperties(recommended)
+      })
+      .catch((error) => {
+      });
+  };
+  useEffect(() => {
+    getAllListings();
+  }, [])
   return (
     <div className="min-h-screen flex">
       <div className="flex-1 p-8 bg-white dark:bg-gray-900 min-h-screen">

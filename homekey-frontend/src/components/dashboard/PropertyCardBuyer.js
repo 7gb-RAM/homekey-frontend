@@ -16,6 +16,10 @@ const PropertyCardBuyer = ({
   squareFootage,
   saved,
   onSave,
+  onClickApprove,
+  title,
+  btnClass,
+  btnDisabled,
 }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -37,7 +41,7 @@ const PropertyCardBuyer = ({
       <div className="p-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{address}</h3>
         <p className="font-semibold text-xl text-gray-900 dark:text-white mb-4">
-          ${price.toLocaleString()}
+          ${price}
         </p>
         <div className="flex items-center text-gray-700 dark:text-gray-300 mb-4">
           <div className="flex items-center mr-4">
@@ -54,12 +58,12 @@ const PropertyCardBuyer = ({
           </div>
           <div className="flex items-center">
             <Square3Stack3DIcon className="h-5 w-5 mr-1" />
-            <span>{squareFootage.toLocaleString()} </span>
+            <span>{squareFootage} </span>
           </div>
         </div>
 
-        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
-          Request Info
+        <button disabled={btnDisabled} className={`w-full bg-blue-600 ${!btnDisabled && "hover:bg-blue-700"} text-white py-2 rounded-lg ${btnClass}`} onClick={onClickApprove}>
+         {title != null ? title : "Request Info" }
         </button>
       </div>
     </div>

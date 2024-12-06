@@ -9,10 +9,10 @@ const SellerSidebar = () => {
   const menuItems = [
     { name: 'Overview', icon: HomeIcon, path: '/' },
     { name: 'Listings', icon: DocumentCurrencyDollarIcon, path: '/listings' },
-    { name: 'Tasks', icon: ClipboardDocumentListIcon, path: '/tasks' },
-    { name: 'Documents', icon: DocumentIcon, path: '/documents' },
-    { name: 'Transactions', icon: CurrencyDollarIcon, path: '/transactions' },
-    { name: 'Messages', icon: ChatBubbleLeftIcon, path: '/messages' },
+    // { name: 'Tasks', icon: ClipboardDocumentListIcon, path: '/tasks' },
+    // { name: 'Documents', icon: DocumentIcon, path: '/documents' },
+    // { name: 'Transactions', icon: CurrencyDollarIcon, path: '/transactions' },
+    // { name: 'Messages', icon: ChatBubbleLeftIcon, path: '/messages' },
   ];
 
   return (

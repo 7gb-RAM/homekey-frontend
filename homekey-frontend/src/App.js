@@ -18,6 +18,7 @@ import Search from "./pages/listings/search";
 import Saved from "./pages/listings/saved";
 import BuyerWorkflow from "./pages/workflows/buyer_workflow";
 import Messages from "./pages/messages/messages";
+import { ApprovedListings } from "./pages/approved-listings";
 
 export function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -79,6 +80,7 @@ function App() {
                 )
               }
             />
+            <Route path="/approved-listings" element={<ApprovedListings />} />
             <Route path="/listings" element={<Listings />} />
             <Route path="/listings/create" element={<CreateListing />} />
             <Route path="/saved" element={<Saved />} />

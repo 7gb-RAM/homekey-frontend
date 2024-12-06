@@ -1,6 +1,7 @@
-import React from 'react';
+import React from "react";
+import Loader from "../loader";
 
-const StatCard = ({ icon: Icon, title, value, subtitle }) => {
+const StatCard = ({ icon: Icon, title, value, subtitle, isLoading }) => {
   return (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between mb-4">
@@ -8,8 +9,9 @@ const StatCard = ({ icon: Icon, title, value, subtitle }) => {
         {Icon && <Icon className="h-5 w-5 text-gray-400 dark:text-gray-500" />}
       </div>
       <div className="space-y-1">
-        <p className="text-2xl font-semibold text-gray-900 dark:text-white">{value}</p>
-        {subtitle && <p className="text-sm text-gray-500 dark:text-gray-400">{subtitle}</p>}
+        {isLoading && <Loader />}
+        {!isLoading && <p className="text-2xl font-semibold text-gray-900 dark:text-white">{value}</p>}
+        {!isLoading && subtitle ? <p className="text-sm text-gray-500 dark:text-gray-400">{subtitle}</p> : <></>}
       </div>
     </div>
   );

@@ -70,13 +70,13 @@ const TopBar = () => {
           {/* Dropdown Menu */}
           {isSettingsOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1">
-              <button
+              {/* <button
                 onClick={handleSettingsClick}
                 className="w-full px-4 py-2 text-left flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200"
               >
                 <Cog6ToothIcon className="h-5 w-5" />
                 <span>Settings</span>
-              </button>
+              </button> */}
               <button
                 onClick={handleLogout}
                 className="w-full px-4 py-2 text-left flex items-center space-x-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-red-600 dark:text-red-400"
