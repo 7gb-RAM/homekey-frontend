@@ -30,7 +30,7 @@ const SellerSidebar = () => {
             <a
               key={item.name}
               href={item.path}
-              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200 ${location.pathname === item.path && "bg-gray-700"}`}
+              className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 mb-2 transition-colors duration-200 ${location.pathname === item.path && "bg-gray-300 dark:bg-gray-700"}`}
             >
               <item.icon className="h-5 w-5" />
               <span>{item.name}</span>

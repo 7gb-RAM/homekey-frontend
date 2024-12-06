@@ -3,6 +3,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
+  darkMode: 'class', // Make sure it's 'class' strategy, not 'media'
   theme: {
     extend: {
       colors: {
