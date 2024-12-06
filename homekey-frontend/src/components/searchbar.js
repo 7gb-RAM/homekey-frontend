@@ -23,6 +23,9 @@ const SearchBar = ({ onSearch }) => {
         if (minValue) searchCriteria.minBathrooms = minValue;
         if (maxValue) searchCriteria.maxBathrooms = maxValue;
         break;
+      case 'area':
+        if (minValue) searchCriteria.minArea = minValue;
+        if (maxValue) searchCriteria.maxArea = minValue;
       default:
         break;
     }
@@ -37,6 +40,8 @@ const SearchBar = ({ onSearch }) => {
         return 'Min Bedrooms';
       case 'bathrooms':
         return 'Min Bathrooms';
+      case 'area':
+        return 'Min area (sqft)';
       default:
         return 'Min Value';
     }
@@ -50,6 +55,8 @@ const SearchBar = ({ onSearch }) => {
         return 'Max Bedrooms';
       case 'bathrooms':
         return 'Max Bathrooms';
+      case 'area':
+        return 'Max area (sqft)';
       default:
         return 'Max Value';
     }
@@ -63,6 +70,8 @@ const SearchBar = ({ onSearch }) => {
         return '1';
       case 'bathrooms':
         return '1';
+      case 'area':
+        return '200';
       default:
         return '';
     }
@@ -76,6 +85,8 @@ const SearchBar = ({ onSearch }) => {
         return '5';
       case 'bathrooms':
         return '4';
+      case 'area':
+        return '5000';
       default:
         return '';
     }
@@ -97,6 +108,7 @@ const SearchBar = ({ onSearch }) => {
             <option value="price">Price</option>
             <option value="bedrooms">Bedrooms</option>
             <option value="bathrooms">Bathrooms</option>
+            <option value="area">Area</option>
           </select>
         </div>
 

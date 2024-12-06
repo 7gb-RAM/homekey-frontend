@@ -37,7 +37,8 @@ export default function Search() {
   const handleSearch = ({ 
     minPrice, maxPrice, 
     minBedrooms, maxBedrooms, 
-    minBathrooms, maxBathrooms 
+    minBathrooms, maxBathrooms, 
+    minArea, maxArea
   }) => {
     let filtered = allListings;
     if (minPrice) {
@@ -57,6 +58,12 @@ export default function Search() {
     }
     if (maxBathrooms) {
       filtered = filtered.filter((property) => parseInt(property.bathrooms) <= parseInt(maxBathrooms));
+    }
+    if (minArea) {
+      filtered = filtered.filter((property) => parseInt(property.squarefootage) >= parseInt(minArea));
+    }
+    if (maxArea) {
+      filtered = filtered.filter((property) => parseInt(property.squarefootage) <= parseInt(maxArea));
     }
     setFilteredListings(filtered);
   };
