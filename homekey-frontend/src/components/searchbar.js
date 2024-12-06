@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch }) => {
         break;
       case 'area':
         if (minValue) searchCriteria.minArea = minValue;
-        if (maxValue) searchCriteria.maxArea = minValue;
+        if (maxValue) searchCriteria.maxArea = maxValue;
       default:
         break;
     }
